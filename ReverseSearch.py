@@ -70,56 +70,47 @@ from selenium.webdriver.support import expected_conditions as EC
 # image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Sh_79KXtNm6WEXmv53vl5VN5sTkAPw_44g&s"
 wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
+url = 'https://www.google.com/search?sca_esv=49f8345e411de2b2&rlz=1C1GCEA_enIR1115IR1115&sxsrf=AHTn8zp8J8JaD4RDdUqG8s-jfA7U7zxr8Q:1747836789785&q=random+funny+pictures&udm=2&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBsoP4kyzn2c6zz4kirWu1xixFt8Lz6aOKC7HiMUhzJnXeJOAaH_NFgXWvrqYZRtGwqR-s2wEnkWj9Q7DfGvbKJIGweaALa22OoDJCVpF1jHNBzLlPKfXJvyKqq2YI9OdE181O6sPM3Vbfqg_HCCCgkkpq-dg&sa=X&ved=2ahUKEwik5eu337SNAxUA7rsIHeUYDXcQtKgLegQIFRAB&biw=1536&bih=703&dpr=1.25'
 
-def get_images(wd, url):
-    def scroll_down(wd):
-        wd.execute_script('window.scrollTo(0,document.body.scrollHeight);')
 
-    url = 'https://www.google.com/search?sca_esv=49f8345e411de2b2&rlz=1C1GCEA_enIR1115IR1115&sxsrf=AHTn8zp8J8JaD4RDdUqG8s-jfA7U7zxr8Q:1747836789785&q=random+funny+pictures&udm=2&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBsoP4kyzn2c6zz4kirWu1xixFt8Lz6aOKC7HiMUhzJnXeJOAaH_NFgXWvrqYZRtGwqR-s2wEnkWj9Q7DfGvbKJIGweaALa22OoDJCVpF1jHNBzLlPKfXJvyKqq2YI9OdE181O6sPM3Vbfqg_HCCCgkkpq-dg&sa=X&ved=2ahUKEwik5eu337SNAxUA7rsIHeUYDXcQtKgLegQIFRAB&biw=1536&bih=703&dpr=1.25'
+
+def get_images(wd, url, max_images=10):
     wd.get(url)
-    ali = 0
+    time.sleep(2)
+    images = wd.find_elements(By.TAG_NAME, 'img')
     image_urls = set()
-    # 10 is the number of images the we want to get them
-
-    while len(image_urls) < 10:
-        preview_images = wd.find_elements(By.CLASS_NAME, 'YQ4gaf')
-        if preview_images:
-            print('THUMBNAILS')
-        else:
-            time.sleep(2) 
-            continue
-        for img in preview_images[len(preview_images) : 10]:
-            try:
-                img.click()
-                time.sleep(2)
-                print('CLICK!')
-            except Exception as e:
-                print('RID! Error:')
-            print('RESIDIM BE BOZARGE!')
-            Large_images = wd.find_elements(By.CLASS_NAME, 'FyHeAf')
-            for image in Large_images:
-                ali = ali + 1
-                if image.get_attribute('src') and 'http' in image.get_attribute('src'):
-                    image_urls.add(image.get_attribute('src'))
-                    print('Found an image!')
-    return image_urls
 
 
-def download_images(download_path, url, filename):
-    try:
-        image_content = requests.get(url).content
-        # saving the image as bytes using io
-        image_file = io.BytesIO(image_content)
-        # trsforming it to a image
-        image = Image.open(image_file)
-        file_path = download_path + filename
-        # saving the image
-        with open(file_path, 'wb') as f:
-            image.save(f, 'JPEG')
-        print('Succes')
-    except Exception as e:
-        print('Failed')
+    for img in images:
+        image_url = img.get_attribute('src') or img.get_attribute('data-src')
+        if image_url and "data:image/gif" not in image_url:
+            width = int(img.get_attribute('width') or 0)
+            height = int(img.get_attribute('height') or 0)
+            if width >= 100 and height >= 100:
+                image_urls.add(image_url)
+        if len(image_urls) >= max_images:
+            break
+
+    return list(image_urls) if image_urls else []
+
+def download_images(download_path, image_urls):
+    os.makedirs(download_path, exist_ok=True)
+
+    for i, url in enumerate(image_urls):
+        try:
+            image_content = requests.get(url).content
+            # saving the image as bytes using io
+            image_file = io.BytesIO(image_content)
+            # trsforming it to a image
+            image = Image.open(image_file)
+            file_path = os.path.join(download_path, f"image_{i+1}.jpg")
+            image.save(file_path, 'JPEG')
+            print(f"Downloaded {file_path}")
+        except Exception as e:
+            print(f"Failed to download {url}: {e}")
 
 
-base_url = 'https://www.google.com/search?q=random+funny+pictures&sca_esv=49f8345e411de2b2&rlz=1C1GCEA_enIR1115IR1115&udm=2&biw=1536&bih=271&sxsrf=AHTn8zqqCZmpFyHdwj4Shl6ykkjzhZeBdA%3A1747838210742&ei=AuUtaP2HLZjk7_UPjvejwAc&ved=0ahUKEwj9kLTd5LSNAxUY8rsIHY77CHgQ4dUDCBE&uact=5&oq=random+funny+pictures&gs_lp=EgNpbWciFXJhbmRvbSBmdW5ueSBwaWN0dXJlczIHECMYJxjJAjIGEAAYBxgeMgYQABgHGB4yBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIEEAAYHjIEEAAYHki3A1AAWABwAXgAkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAIMmAMAiAYBkgcBMaAHALIHALgHAMIHAzMtMcgHCQ&sclient=img'
-top_urls = get_images(wd, base_url)
+image_urls = get_images(wd, url)
+download_images("downloaded_images", image_urls)
+
+wd.quit()
