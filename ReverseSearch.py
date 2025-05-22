@@ -10,6 +10,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import base64
+import re
+
 
 # def search(image_path):
 #     options = Options()
@@ -78,6 +81,7 @@ def get_images(wd, url, max_images=10):
     wd.get(url)
     time.sleep(2)
     images = wd.find_elements(By.TAG_NAME, 'img')
+    print(images)
     image_urls = set()
 
 
@@ -98,7 +102,16 @@ def download_images(download_path, image_urls):
 
     for i, url in enumerate(image_urls):
         try:
-            image_content = requests.get(url).content
+            if url.startswith("data:image"):
+                # Handle base64-encoded data URI
+                # Extract the base64 part (after the comma)
+                base64_string = re.match(r'data:image\/[a-z]+;base64,(.*)', url).group(1)
+                # Decode base64 data
+                image_content = base64.b64decode(base64_string)
+            else:
+                # Handle regular URL
+                image_content = requests.get(url).content
+        
             # saving the image as bytes using io
             image_file = io.BytesIO(image_content)
             # trsforming it to a image
@@ -110,7 +123,8 @@ def download_images(download_path, image_urls):
             print(f"Failed to download {url}: {e}")
 
 
-image_urls = get_images(wd, url)
+image_urls = get_images(wd, url, 1)
+
 download_images("downloaded_images", image_urls)
 
 wd.quit()
