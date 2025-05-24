@@ -116,14 +116,15 @@ def wiki_extract(url):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     title = soup.find('h1').text.strip()
-
+    text = ''
     data = soup.find_all('p')
     for p in data:
-        text = p.get_text(strip=True)
+        text += p.get_text(strip=True) + ' '
 
-    print(text[:500])
     with open('./results.txt', 'w') as f:
         f.write(text)
+
+    print(text[:500])
     return text
 
 
