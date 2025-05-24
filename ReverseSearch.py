@@ -86,7 +86,48 @@ def extract_images(driver, max_images=10):
     return list(image_urls), list(source_urls)[0:max_images+10]
 
 
-def save_source_urls(source_urls, file_name='sourceURLs.txt'):
+def extract_data_first(driver, class_name='I9S4yc'):
+    try:
+        span = driver.find_element(By.CLASS_NAME, class_name)
+        text = span.text.strip()
+        
+        print(f'the Name is: {text}')
+        url = f'https://www.google.com/search?q={text}'
+
+        driver.get(url)
+        time.sleep(3)
+
+        links = driver.find_elements(By.XPATH, '//a[contains(@href, "wikipedia.org")]')
+        for link in links:
+            href = link.get_attribute('href')
+            if 'wikipedia.org' in href:
+                print(href)
+                return href
+        print("Wikipedia link not found.")
+        return None
+
+    except Exception as e:
+        print(f"Could not find span with class '{class_name}': {e}")
+
+
+def wiki_extract(url):
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    title = soup.find('h1').text.strip()
+
+    data = soup.find_all('p')
+    for p in data:
+        text = p.get_text(strip=True)
+
+    print(text[:500])
+    with open('./results.txt', 'w') as f:
+        f.write(text)
+    return text
+
+
+def save_source_urls(source_urls, file_name='./sourceURLs.txt'):
     with open(file_name, 'w', encoding='utf-8') as file:
         for url in source_urls:
             file.write(f"{url}\n")
@@ -96,7 +137,6 @@ def download_images(download_path, image_urls):
     if os.path.exists(download_path) and os.path.isdir(download_path):
         shutil.rmtree(download_path)
     os.makedirs(download_path, exist_ok=True)
-
     for i, url in enumerate(image_urls):
         try:
             if url.startswith('data:image'):
@@ -167,13 +207,15 @@ def main(image_path):
             save_source_urls(source_urls)
         else:
             print('no source URLs found.')
-        input_file = 'D:/ARS/programming/faceidentifier/1/sourceURLs.txt'
+        input_file = './sourceURLs.txt'
         output_file = 'results.txt'
-        urlproccessor(input_file, output_file)
+        # urlproccessor(input_file, output_file)
+        result = extract_data_first(driver, class_name='I9S4yc')
+        wiki_extract(result)
     finally:
         driver.quit()
 
 
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test/download1.png'
+image_path = './test/download1.png'
 main(image_path)
