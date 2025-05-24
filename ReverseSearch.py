@@ -2,7 +2,6 @@ import os
 import time
 import io
 import base64
-import random
 import re
 import shutil
 import requests
@@ -14,7 +13,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-
 
 def setup_driver():
     options = Options()
@@ -34,7 +32,6 @@ def setup_driver():
     )
     return driver
 
-
 def search_google_lens(driver, image_path):
     driver.get('https://lens.google.com/')
     wait = WebDriverWait(driver, 20)
@@ -42,6 +39,7 @@ def search_google_lens(driver, image_path):
     if not os.path.exists(image_path):
         print('Image not found!')
         return False
+
     upload_input = wait.until(
         EC.presence_of_element_located((By.XPATH, '//input[@type="file"]'))
     )
@@ -50,20 +48,19 @@ def search_google_lens(driver, image_path):
     try:
         wait.until(
             EC.presence_of_element_located(
-                (
-                    By.XPATH,
-                    '//img[contains(@src,"gstatic") or contains(@src,"googleusercontent")]'
-                )
+                (By.XPATH, '//img[contains(@src,"gstatic") or contains(@src,"googleusercontent")]')
             )
         )
     except Exception:
         driver.save_screenshot('lens_result_fail.png')
         print('No results loaded or blocked by CAPTCHA.')
         return False
+
     return True
 
-
 def extract_images(driver, max_images=10):
+    wait = WebDriverWait(driver, 10)
+
     image_elements = driver.find_elements(By.TAG_NAME, 'img')
     image_urls = set()
 
@@ -76,37 +73,37 @@ def extract_images(driver, max_images=10):
                 image_urls.add(src)
         if len(image_urls) >= max_images:
             break
-    return list(image_urls)
+
+    links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
+    source_urls = {link.get_attribute('href') for link in links if link.get_attribute('href')}
 
 
-def save_links(image_urls, file_name='links.txt'):
-    with open(file_name, 'w') as file:
-        for url in image_urls:
-            if url.startswith('data:image'):
-                base64_string = re.match(r'data:image\/[a-z]+;base64,(.*)', url).group(
-                    1
-                )
-                image_content = base64.b64decode(base64_string)
-                file.write(f"{image_content}\n")
-            else:
-                file.write(f"{url}\n")
-                
+    return list(image_urls), list(source_urls)[0:max_images]
 
+def save_source_urls(source_urls, file_name='sourceURLs.txt'):
+    with open(file_name, 'w', encoding='utf-8') as file:
+        for url in source_urls:
+            file.write(f"{url}\n")
 
 def download_images(download_path, image_urls):
     if os.path.exists(download_path) and os.path.isdir(download_path):
         shutil.rmtree(download_path)
     os.makedirs(download_path, exist_ok=True)
+
     for i, url in enumerate(image_urls):
         try:
             if url.startswith('data:image'):
-                base64_string = re.match(r'data:image\/[a-z]+;base64,(.*)', url).group(
-                    1
-                )
-                image_content = base64.b64decode(base64_string)
+                match = re.match(r'data:image\/[a-z]+;base64,(.*)', url)
+                if match:
+                    base64_string = match.group(1)
+                    image_content = base64.b64decode(base64_string)
+                else:
+                    continue
             else:
                 response = requests.get(url, timeout=10)
+                response.raise_for_status()
                 image_content = response.content
+
             image_file = io.BytesIO(image_content)
             image = Image.open(image_file)
             file_path = os.path.join(download_path, f"image_{i + 1}.jpg")
@@ -115,23 +112,29 @@ def download_images(download_path, image_urls):
         except Exception as e:
             print(f"Failed to download {url}: {e}")
 
-
 def main(image_path):
     driver = setup_driver()
-
     try:
         if not search_google_lens(driver, image_path):
-            print('Image search failed or blocked.')
+            print('image search failed or blocked.')
             return
-        image_urls = extract_images(driver, max_images=10)
+
+        image_urls, source_urls = extract_images(driver, max_images=10)
+
         if image_urls:
-            save_links(image_urls)
+            print(f"found {len(image_urls)} images.")
             download_images('downloaded_images', image_urls)
         else:
-            print('No images found.')
+            print('no images found.')
+
+        if source_urls:
+            print(f"found {len(source_urls)} source URLs.")
+            save_source_urls(source_urls)
+        else:
+            print("no source URLs found.")
+
     finally:
         driver.quit()
-
 
 # Set your image path here
 image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test/download4.png'
