@@ -5,6 +5,7 @@ import base64
 import re
 import shutil
 import requests
+from bs4 import BeautifulSoup
 from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,6 +14,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 def setup_driver():
     options = Options()
@@ -32,6 +34,7 @@ def setup_driver():
     )
     return driver
 
+
 def search_google_lens(driver, image_path):
     driver.get('https://lens.google.com/')
     wait = WebDriverWait(driver, 20)
@@ -39,7 +42,6 @@ def search_google_lens(driver, image_path):
     if not os.path.exists(image_path):
         print('Image not found!')
         return False
-
     upload_input = wait.until(
         EC.presence_of_element_located((By.XPATH, '//input[@type="file"]'))
     )
@@ -48,15 +50,18 @@ def search_google_lens(driver, image_path):
     try:
         wait.until(
             EC.presence_of_element_located(
-                (By.XPATH, '//img[contains(@src,"gstatic") or contains(@src,"googleusercontent")]')
+                (
+                    By.XPATH,
+                    '//img[contains(@src,"gstatic") or contains(@src,"googleusercontent")]'
+                )
             )
         )
     except Exception:
         driver.save_screenshot('lens_result_fail.png')
         print('No results loaded or blocked by CAPTCHA.')
         return False
-
     return True
+
 
 def extract_images(driver, max_images=10):
     wait = WebDriverWait(driver, 10)
@@ -73,17 +78,19 @@ def extract_images(driver, max_images=10):
                 image_urls.add(src)
         if len(image_urls) >= max_images:
             break
-
     links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
-    source_urls = {link.get_attribute('href') for link in links if link.get_attribute('href')}
+    source_urls = {
+        link.get_attribute('href') for link in links if link.get_attribute('href')
+    }
 
+    return list(image_urls), list(source_urls)[0:max_images+10]
 
-    return list(image_urls), list(source_urls)[0:max_images]
 
 def save_source_urls(source_urls, file_name='sourceURLs.txt'):
     with open(file_name, 'w', encoding='utf-8') as file:
         for url in source_urls:
             file.write(f"{url}\n")
+
 
 def download_images(download_path, image_urls):
     if os.path.exists(download_path) and os.path.isdir(download_path):
@@ -103,7 +110,6 @@ def download_images(download_path, image_urls):
                 response = requests.get(url, timeout=10)
                 response.raise_for_status()
                 image_content = response.content
-
             image_file = io.BytesIO(image_content)
             image = Image.open(image_file)
             file_path = os.path.join(download_path, f"image_{i + 1}.jpg")
@@ -112,13 +118,43 @@ def download_images(download_path, image_urls):
         except Exception as e:
             print(f"Failed to download {url}: {e}")
 
+
+def urlproccessor(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as f:
+        urls = [line.strip() for line in f if line.strip()]
+    with open(output_file, 'a', encoding='utf-8') as f_out:
+        for url in urls:
+            try:
+                response = requests.get(url, timeout=10)
+                soup = BeautifulSoup(response.text, 'html.parser')
+
+                title = soup.title.string.strip() if soup.title else 'No Title'
+                paragraphs = [
+                    p.get_text(strip=True)
+                    for p in soup.find_all('p')
+                    if p.get_text(strip=True)
+                ]
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    pass
+                f_out.write(f'URL: {url}\n')
+                f_out.write(f'Title: {title}\n')
+                f_out.write('First paragraphs:\n')
+                for para in paragraphs[:3]:
+                    f_out.write(f'- {para}\n')
+                f_out.write('\n' + '-' * 60 + '\n\n')
+            except Exception as e:
+                f_out.write(f'URL: {url}\n')
+                f_out.write(f'Error processing: {str(e)}\n')
+                f_out.write('\n' + '-' * 60 + '\n\n')
+    print(f'Extraction completed. Results saved in "{output_file}".')
+
+
 def main(image_path):
     driver = setup_driver()
     try:
         if not search_google_lens(driver, image_path):
             print('image search failed or blocked.')
             return
-
         image_urls, source_urls = extract_images(driver, max_images=10)
 
         if image_urls:
@@ -126,16 +162,18 @@ def main(image_path):
             download_images('downloaded_images', image_urls)
         else:
             print('no images found.')
-
         if source_urls:
             print(f"found {len(source_urls)} source URLs.")
             save_source_urls(source_urls)
         else:
-            print("no source URLs found.")
-
+            print('no source URLs found.')
+        input_file = 'D:/ARS/programming/faceidentifier/1/sourceURLs.txt'
+        output_file = 'results.txt'
+        urlproccessor(input_file, output_file)
     finally:
         driver.quit()
 
+
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test/download4.png'
+image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test/download1.png'
 main(image_path)
