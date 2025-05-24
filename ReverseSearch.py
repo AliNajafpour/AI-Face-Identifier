@@ -121,10 +121,10 @@ def wiki_extract(url):
     for p in data:
         text += p.get_text(strip=True) + ' '
 
-    with open('./results.txt', 'w') as f:
+    with open('./results.txt', 'w', encoding='utf-8') as f:
         f.write(text)
 
-    print(text[:500])
+    print("Extract Completed")
     return text
 
 
@@ -198,6 +198,16 @@ def main(image_path):
             return
         image_urls, source_urls = extract_images(driver, max_images=10)
 
+        try:
+            result = extract_data_first(driver, class_name='I9S4yc')
+            if result is not None:
+                wiki_extract(result)
+                return
+            else:
+                print('returned None.')
+        except Exception as e:
+            print(e)
+
         if image_urls:
             print(f"found {len(image_urls)} images.")
             download_images('downloaded_images', image_urls)
@@ -210,13 +220,12 @@ def main(image_path):
             print('no source URLs found.')
         input_file = './sourceURLs.txt'
         output_file = 'results.txt'
-        # urlproccessor(input_file, output_file)
-        result = extract_data_first(driver, class_name='I9S4yc')
-        wiki_extract(result)
+        urlproccessor(input_file, output_file)
+
     finally:
         driver.quit()
 
 
 # Set your image path here
-image_path = './test/download1.png'
+image_path = './test/jadi.jpg'
 main(image_path)
