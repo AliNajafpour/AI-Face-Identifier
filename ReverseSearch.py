@@ -130,7 +130,7 @@ def wiki_extract(url):
     return text
 
 
-def linkedin_extract(driver , url='https://www.linkedin.com/in/williamhgates/'):
+def linkedin_extract(driver , url):
     LINKEDIN_EMAIL = 'arsprogramming123@gmail.com'
     LINKEDIN_PASSWORD = 'ars13861201'
     try:
