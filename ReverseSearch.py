@@ -38,11 +38,12 @@ def setup_driver():
 
 def search_google_lens(driver, image_path):
     driver.get('https://lens.google.com/')
-    wait = WebDriverWait(driver, 20)
+    wait = WebDriverWait(driver, 30)
 
     if not os.path.exists(image_path):
         print('Image not found!')
         return False
+
     upload_input = wait.until(
         EC.presence_of_element_located((By.XPATH, '//input[@type="file"]'))
     )
@@ -50,17 +51,15 @@ def search_google_lens(driver, image_path):
 
     try:
         wait.until(
-            EC.presence_of_element_located(
-                (
-                    By.XPATH,
-                    '//img[contains(@src,"gstatic") or contains(@src,"googleusercontent")]'
-                )
-            )
+            EC.presence_of_all_elements_located((By.TAG_NAME, 'img'))
         )
+        time.sleep(3)
+
     except Exception:
-        driver.save_screenshot('./AI-Face-Identifier/results/lens_result_fail.png')
+        driver.save_screenshot('./results/lens_result_fail.png')
         print('No results loaded or blocked by CAPTCHA.')
         return False
+
     return True
 
 
@@ -89,7 +88,6 @@ def extract_images(driver, max_images=10):
     return list(image_urls), list(source_urls)[0 : max_images + 10]
 
 def extract_data_first(driver, class_name='I9S4yc'):
-    linkedin = False
     try:
         span = driver.find_element(By.CLASS_NAME, class_name)
         text = span.text.strip()
@@ -101,14 +99,27 @@ def extract_data_first(driver, class_name='I9S4yc'):
         time.sleep(3)
 
         links = driver.find_elements(By.XPATH, '//a[contains(@href, "wikipedia.org")]')
+        count = 0
+        lst = []
+
         for link in links:
             href = link.get_attribute('href')
             if 'wikipedia.org' in href:
                 print(href)
+                with open('./results/links.txt', 'w', encoding='utf-8') as f:
+                    f.write(href)
                 return href
+            
             elif 'linkedin.com' in href:
-                linkedin = True
+                with open('./results/links.txt', 'w', encoding='utf-8') as f:
+                    f.write(href)
                 return href
+
+            if count < 4:
+                count += 1
+                with open('./results/links.txt', 'w', encoding='utf-8') as f:
+                    f.write(href)
+
         return True
     except Exception as e:
         print(f"Could not find span with class '{class_name}': {e}")
@@ -124,7 +135,7 @@ def wiki_extract(url):
     data = soup.find_all('p')
     for p in data:
         text += p.get_text(strip=True) + ' '
-    with open('./AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8') as f:
+    with open('./results/results.txt', 'w', encoding='utf-8') as f:
         f.write(text)
     print('Extract Completed')
     return text
@@ -180,7 +191,7 @@ def linkedin_extract(driver , url):
         except Exception as e:
             contact_info = {'error': f"Failed to extract contact info: {str(e)}"}
         with open(
-            './AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8'
+            './results/results.txt', 'w', encoding='utf-8'
         ) as file:
             file.write(f"Name: {name}\n")
             file.write(f"Title: {title}\n")
@@ -195,10 +206,8 @@ def linkedin_extract(driver , url):
     finally:
         pass
 
-
-
 def save_source_urls(
-    source_urls, file_name='./AI-Face-Identifier/results/sourceURLs.txt'
+    source_urls, file_name='./results/sourceURLs.txt'
 ):
     with open(file_name, 'w', encoding='utf-8') as file:
         for url in source_urls:
@@ -273,17 +282,19 @@ def main(image_path):
 
         try:
             result  = extract_data_first(driver, class_name='I9S4yc')
-            if result is not None and result ==True:                
-                linkedin_extract(driver ,result)
+            time.sleep(2)
+            if result is not None and result == True: 
+                wiki_extract(result)                            
                 return
             else:
-                wiki_extract(result)
+                # linkedin_extract(driver ,result)
+                pass
         except Exception as e:
             print(e)
         if image_urls:
             print(f"found {len(image_urls)} images.")
             download_images(
-                './AI-Face-Identifier/results/downloaded_images', image_urls
+                './results/downloaded_images', image_urls
             )
         else:
             print('no images found.')
@@ -292,13 +303,13 @@ def main(image_path):
             save_source_urls(source_urls)
         else:
             print('no source URLs found.')
-        input_file = './AI-Face-Identifier/results/sourceURLs.txt'
-        output_file = './AI-Face-Identifier/results/results.txt'
+        input_file = './results/sourceURLs.txt'
+        output_file = './results/results.txt'
         urlproccessor(input_file, output_file)
     finally:
         driver.quit()
 
 
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/download2.png'
+image_path = 'test_assets/images/testnf.jpg'
 main(image_path)
