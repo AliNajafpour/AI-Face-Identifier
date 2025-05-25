@@ -1,23 +1,104 @@
-URL: https://www.linkedin.com/pub/dir/+/Behroozi/ir-0-Iran
-Title: No Title
+URL: https://timesofindia.indiatimes.com/entertainment/english/hollywood/news/brad-pitt-turns-weatherman-for-john-krasinskis-some-good-news/articleshow/75267640.cms
+Error processing: HTTPSConnectionPool(host='timesofindia.indiatimes.com', port=443): Max retries exceeded with url: /entertainment/english/hollywood/news/brad-pitt-turns-weatherman-for-john-krasinskis-some-good-news/articleshow/75267640.cms (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F6F791D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.esquire.com/uk/style/a28560477/brad-pitt-nineties-style-once-upon-a-time-in-hollywood/
+Error processing: HTTPSConnectionPool(host='www.esquire.com', port=443): Read timed out. (read timeout=10)
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/editorial/image-editorial/dr-tracy-caldwell-dyson-10417952a
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /editorial/image-editorial/dr-tracy-caldwell-dyson-10417952a (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F6F65950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.youtube.com/watch?v=7wmfO4vtBaA
+Error processing: HTTPSConnectionPool(host='www.youtube.com', port=443): Max retries exceeded with url: /watch?v=7wmfO4vtBaA (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F709D810>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://timesofindia.indiatimes.com/entertainment/english/hollywood/news/brad-pitt-to-star-in-top-gun-maverick-director-joseph-kosinskis-untitled-f1-film/articleshow/101595799.cms
+Error processing: HTTPSConnectionPool(host='timesofindia.indiatimes.com', port=443): Max retries exceeded with url: /entertainment/english/hollywood/news/brad-pitt-to-star-in-top-gun-maverick-director-joseph-kosinskis-untitled-f1-film/articleshow/101595799.cms (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F709F2D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/image-photo/venice-italy-august-29-brad-pitt-1512979445
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /image-photo/venice-italy-august-29-brad-pitt-1512979445 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F70B8CD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://es.pinterest.com/pin/731905376975204313/
+Title: Pin by Tamás Imre Sári on haj in 2025 | Brad pitt, Hair cuts, Mens hairstyles
 First paragraphs:
 
 ------------------------------------------------------------
 
-URL: https://www.sciencedirect.com/science/article/abs/pii/S0925231220306093
-Title: ScienceDirect
-First paragraphs:
-- Pleasecontact our support teamfor more information and provide the details below.
-- Cookies are used by this site.Cookie Settings
-- All content on this site: Copyright ©2024Elsevier B.V., its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply.
+URL: https://www.loveexploring.com/galleries/137132/from-beyoncs-horsefly-to-lady-gagas-fern-these-plants-and-animals-are-n
+Error processing: HTTPSConnectionPool(host='www.loveexploring.com', port=443): Read timed out. (read timeout=10)
 
 ------------------------------------------------------------
 
-URL: https://www.researchgate.net/profile/Hamid-Behroozi
-Title: ResearchGate - Temporarily Unavailable
+URL: https://www.shutterstock.com/es/editorial/video/search/brad-pitt
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /es/editorial/video/search/brad-pitt (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F715ACD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.youtube.com/watch?v=Q49EEy8ta78
+Error processing: HTTPSConnectionPool(host='www.youtube.com', port=443): Max retries exceeded with url: /watch?v=Q49EEy8ta78 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F715ABD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.eonline.com/news/1074835/watch-brad-pitt-s-terrible-attempt-at-being-unfiltered
+Error processing: HTTPSConnectionPool(host='www.eonline.com', port=443): Read timed out. (read timeout=10)
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/editorial/image-editorial/aaron-williamson-brittany-olson-10417983y
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /editorial/image-editorial/aaron-williamson-brittany-olson-10417983y (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F7160E10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/image-photo/los-angeles-sep-18-brad-pitt-1511536850
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /image-photo/los-angeles-sep-18-brad-pitt-1511536850 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F7162990>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.esquire.com/uk/style/a29082499/brad-pitt-your-new-don-corleone-rings/
+Error processing: HTTPSConnectionPool(host='www.esquire.com', port=443): Read timed out. (read timeout=10)
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/image-photo/london-uk-july-30-2019-brad-1466942936
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /image-photo/london-uk-july-30-2019-brad-1466942936 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F7172410>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.shutterstock.com/editorial/image-editorial/aerosmith-lead-singer-steven-tyler-his-girlfriend-12423682l
+Error processing: HTTPSConnectionPool(host='www.shutterstock.com', port=443): Max retries exceeded with url: /editorial/image-editorial/aerosmith-lead-singer-steven-tyler-his-girlfriend-12423682l (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F7163590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://en.vijesti.me/fun/interesting/622309/bred-pit-is-exhibiting-its-sculptures-in-Finland-for-the-first-time
+Error processing: HTTPSConnectionPool(host='en.vijesti.me', port=443): Max retries exceeded with url: /fun/interesting/622309/bred-pit-is-exhibiting-its-sculptures-in-Finland-for-the-first-time (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000188F7162850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.imdb.com/news/ni62723013/
+Title: 403 Forbidden
 First paragraphs:
-- You do not have access to www.researchgate.net.
-- The site owner may have set restrictions that prevent you from accessing the site.
+
+------------------------------------------------------------
+
+URL: https://www.democratandchronicle.com/embed/video/2339386001/
+Title: Brad Pitt walked away from role in 'Shawshank Redemption'
+First paragraphs:
+
+------------------------------------------------------------
+
+URL: https://www.deccanherald.com/tags/paul-mccartney
+Title: Paul McCartney
+First paragraphs:
 
 ------------------------------------------------------------
 

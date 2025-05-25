@@ -100,13 +100,14 @@ def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
 
         links = driver.find_elements(By.CLASS_NAME, 'zReHs')
 
-        # Extract href attributes
-
         count = 0
+
+        with open('./results/links.txt', 'w', encoding='utf-8') as f:
+            f.write("")
 
         for link in links:
             href = link.get_attribute('href')
-            print(href)
+            print(href)               
             if 'wikipedia.org' in href:
                 print(href)
                 with open('./results/links.txt', 'a', encoding='utf-8') as f:
@@ -138,7 +139,7 @@ def wiki_extract(url):
     data = soup.find_all('p')
     for p in data:
         text += p.get_text(strip=True) + ' '
-    with open('./results/results.txt', 'w', encoding='utf-8') as f:
+    with open('./results/wikiResults.txt', 'w', encoding='utf-8') as f:
         f.write(text)
     print('Extract Completed')
     return text
@@ -275,44 +276,63 @@ def urlproccessor(input_file, output_file):
     print(f'Extraction completed. Results saved in "{output_file}".')
 
 
-def main(image_path):
+# def main(image_path):
+#     driver = setup_driver()
+#     try:
+#         if not search_google_lens(driver, image_path):
+#             print('image search failed or blocked.')
+#             return
+#         image_urls, source_urls = extract_images(driver, max_images=10)
+
+#         try:
+#             result  = extract_data_first(driver, class_name='I9S4yc')
+#             time.sleep(2)
+#             if result is not None and result == True: 
+#                 wiki_extract(result)                            
+#                 return
+#             else:
+#                 # linkedin_extract(driver ,result)
+#                 pass
+#         except Exception as e:
+#             print(e)
+#         if image_urls:
+#             print(f"found {len(image_urls)} images.")
+#             download_images(
+#                 './results/downloaded_images', image_urls
+#             )
+#         else:
+#             print('no images found.')
+#         if source_urls:
+#             print(f"found {len(source_urls)} source URLs.")
+#             save_source_urls(source_urls)
+#         else:
+#             print('no source URLs found.')
+#         input_file = './results/sourceURLs.txt'
+#         output_file = './results/results.txt'
+#         urlproccessor(input_file, output_file)
+#     finally:
+#         driver.quit()
+
+
+def main(path):
     driver = setup_driver()
     try:
-        if not search_google_lens(driver, image_path):
-            print('image search failed or blocked.')
-            return
+        search_google_lens(driver, image_path)
         image_urls, source_urls = extract_images(driver, max_images=10)
 
-        try:
-            result  = extract_data_first(driver, class_name='I9S4yc')
-            time.sleep(2)
-            if result is not None and result == True: 
-                wiki_extract(result)                            
-                return
-            else:
-                # linkedin_extract(driver ,result)
-                pass
-        except Exception as e:
-            print(e)
-        if image_urls:
-            print(f"found {len(image_urls)} images.")
-            download_images(
-                './results/downloaded_images', image_urls
-            )
-        else:
-            print('no images found.')
-        if source_urls:
-            print(f"found {len(source_urls)} source URLs.")
-            save_source_urls(source_urls)
-        else:
-            print('no source URLs found.')
-        input_file = './results/sourceURLs.txt'
-        output_file = './results/results.txt'
-        urlproccessor(input_file, output_file)
+        result = extract_data_first(driver, class_name='I9S4yc')
+        if 'wikipedia.org' in result:
+            wiki_extract(result)
+            return
+        
+        elif 'linkedin.com' in result:
+            linkedin_extract(driver, result)
+
     finally:
         driver.quit()
 
 
+
 # Set your image path here
-image_path = 'test_assets/images/testnf.jpg'
+image_path = 'test_assets/images/download.png'
 main(image_path)
