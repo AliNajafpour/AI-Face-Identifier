@@ -137,8 +137,14 @@ def wiki_extract(url):
     title = soup.find('h1').text.strip()
     text = ''
     data = soup.find_all('p')
+    count = 0
+
     for p in data:
-        text += p.get_text(strip=True) + ' '
+        if count == 4:
+            break
+        count += 1
+        text += p.get_text(strip=True) + '\n'
+
     with open('./results/wikiResults.txt', 'w', encoding='utf-8') as f:
         f.write(text)
     print('Extract Completed')
@@ -276,57 +282,41 @@ def urlproccessor(input_file, output_file):
     print(f'Extraction completed. Results saved in "{output_file}".')
 
 
-# def main(image_path):
-#     driver = setup_driver()
-#     try:
-#         if not search_google_lens(driver, image_path):
-#             print('image search failed or blocked.')
-#             return
-#         image_urls, source_urls = extract_images(driver, max_images=10)
-
-#         try:
-#             result  = extract_data_first(driver, class_name='I9S4yc')
-#             time.sleep(2)
-#             if result is not None and result == True: 
-#                 wiki_extract(result)                            
-#                 return
-#             else:
-#                 # linkedin_extract(driver ,result)
-#                 pass
-#         except Exception as e:
-#             print(e)
-#         if image_urls:
-#             print(f"found {len(image_urls)} images.")
-#             download_images(
-#                 './results/downloaded_images', image_urls
-#             )
-#         else:
-#             print('no images found.')
-#         if source_urls:
-#             print(f"found {len(source_urls)} source URLs.")
-#             save_source_urls(source_urls)
-#         else:
-#             print('no source URLs found.')
-#         input_file = './results/sourceURLs.txt'
-#         output_file = './results/results.txt'
-#         urlproccessor(input_file, output_file)
-#     finally:
-#         driver.quit()
-
-
 def main(path):
     driver = setup_driver()
     try:
         search_google_lens(driver, image_path)
         image_urls, source_urls = extract_images(driver, max_images=10)
 
-        result = extract_data_first(driver, class_name='I9S4yc')
-        if 'wikipedia.org' in result:
-            wiki_extract(result)
-            return
+        try:
+            result = extract_data_first(driver, class_name='I9S4yc')
+            if 'wikipedia.org' in result:
+                wiki_extract(result)
+                return
+            
+            elif 'linkedin.com' in result:
+                linkedin_extract(driver, result)
         
-        elif 'linkedin.com' in result:
-            linkedin_extract(driver, result)
+        except:
+            if image_urls:
+                print(f"found {len(image_urls)} images.")
+                download_images(
+                    './results/downloaded_images', image_urls
+                )
+
+            else:
+                print('no images found.')
+
+            if source_urls:
+                print(f"found {len(source_urls)} source URLs.")
+                save_source_urls(source_urls)
+
+            else:
+                print('no source URLs found.')
+
+            input_file = './results/sourceURLs.txt'
+            output_file = './results/results.txt'
+            # urlproccessor(input_file, output_file)
 
     finally:
         driver.quit()
