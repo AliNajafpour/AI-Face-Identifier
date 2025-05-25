@@ -100,7 +100,7 @@ def extract_data_first(driver, class_name='I9S4yc'):
         links = driver.find_elements(By.XPATH, '//a[contains(@href, "wikipedia.org")]')
         for link in links:
             href = link.get_attribute('href')
-            if 'wikipedia.org' in href:
+            if 'wikipedia.org' in href or 'linkedin.com' in href:
                 print(href)
                 return href
         print("Wikipedia link not found.")
@@ -127,6 +127,22 @@ def wiki_extract(url):
     print("Extract Completed")
     return text
 
+def linkedin_extract(url):
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    title = soup.find('h1').text.strip()
+    text = ''
+    data = soup.find_all('p')
+    for p in data:
+        text += p.get_text(strip=True) + ' '
+
+    with open('./AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8') as f:
+        f.write(text)
+
+    print("Extract Completed")
+    return text
 
 def save_source_urls(source_urls, file_name='./AI-Face-Identifier/results/sourceURLs.txt'):
     with open(file_name, 'w', encoding='utf-8') as file:
@@ -204,6 +220,7 @@ def main(image_path):
             result = extract_data_first(driver, class_name='I9S4yc')
             if result is not None:
                 wiki_extract(result)
+                linkedin_extract(result)
                 return
             else:
                 print('returned None.')
@@ -229,5 +246,5 @@ def main(image_path):
 
 
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/test.jpg'
+image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/testnf.jpg'
 main(image_path)
