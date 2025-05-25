@@ -57,7 +57,7 @@ def search_google_lens(driver, image_path):
             )
         )
     except Exception:
-        driver.save_screenshot('lens_result_fail.png')
+        driver.save_screenshot('./AI-Face-Identifier/results/lens_result_fail.png')
         print('No results loaded or blocked by CAPTCHA.')
         return False
     return True
@@ -121,14 +121,14 @@ def wiki_extract(url):
     for p in data:
         text += p.get_text(strip=True) + ' '
 
-    with open('./results.txt', 'w', encoding='utf-8') as f:
+    with open('./AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8') as f:
         f.write(text)
 
     print("Extract Completed")
     return text
 
 
-def save_source_urls(source_urls, file_name='./sourceURLs.txt'):
+def save_source_urls(source_urls, file_name='./AI-Face-Identifier/results/sourceURLs.txt'):
     with open(file_name, 'w', encoding='utf-8') as file:
         for url in source_urls:
             file.write(f"{url}\n")
@@ -163,6 +163,8 @@ def download_images(download_path, image_urls):
 def urlproccessor(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as f:
         urls = [line.strip() for line in f if line.strip()]
+    with open(output_file, 'a', encoding='utf-8'):
+        pass
     with open(output_file, 'a', encoding='utf-8') as f_out:
         for url in urls:
             try:
@@ -210,7 +212,7 @@ def main(image_path):
 
         if image_urls:
             print(f"found {len(image_urls)} images.")
-            download_images('downloaded_images', image_urls)
+            download_images('./AI-Face-Identifier/results/downloaded_images', image_urls)
         else:
             print('no images found.')
         if source_urls:
@@ -218,8 +220,8 @@ def main(image_path):
             save_source_urls(source_urls)
         else:
             print('no source URLs found.')
-        input_file = './sourceURLs.txt'
-        output_file = 'results.txt'
+        input_file = './AI-Face-Identifier/results/sourceURLs.txt'
+        output_file = './AI-Face-Identifier/results/results.txt'
         urlproccessor(input_file, output_file)
 
     finally:
@@ -227,5 +229,5 @@ def main(image_path):
 
 
 # Set your image path here
-image_path = './test/jadi.jpg'
+image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/test.jpg'
 main(image_path)
