@@ -1,5 +1,37 @@
-URL: https://support.google.com/websearch/?p=ws_results_help&hl=en-IR&fg=1
-Title: Google Search Help
+URL: https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiRjte_yb6NAxUR3wIHHVnjI2UQPAgI
+Title: Google
+First paragraphs:
+- © 2025 -Privacy-Terms
+
+------------------------------------------------------------
+
+URL: https://support.google.com/websearch/answer/181196?hl=en-IR
+Title: Accessibility in Google Search - Google Search Help
+First paragraphs:
+- After you search, the results page is organized so that you can easily navigate it with assistive technology, like screen readers and keyboards.
+- On a computer, there are 3 accessibility links at the top of a search results page:
+- To select an accessibility link:
+
+------------------------------------------------------------
+
+URL: https://policies.google.com/privacy?hl=en-IR&fg=1
+Title: Privacy Policy – Privacy & Terms – Google
+First paragraphs:
+- When you use our services, you’re trusting us with your information. We understand that this is a big responsibility and we work hard to protect your information and put you in control.
+- This Privacy Policy is meant to help you understand what information we collect, why we collect it and how you can update, manage, export and delete your information.
+- Privacy Check-Up
+
+------------------------------------------------------------
+
+URL: https://www.google.com/webhp?hl=en&ictx=0&sa=X&ved=0ahUKEwiRjte_yb6NAxUR3wIHHVnjI2UQpYkNCAo
+Title: Google
+First paragraphs:
+- © 2025 -Privacy-Terms
+
+------------------------------------------------------------
+
+URL: https://www.google.com/advanced_search?vsrid=CNCXvaOfsprsURACGAEiJDJiNDViMjQxLTI4MTctNGJiOC05NWRiLTE3YzJmY2E4ZGI1Mzj9m7u_yb6NAw&vsint=CAIqDAoCCAcSAggKGAEgATojChYNAAAAPxUAAAA_HQAAgD8lAACAPzABEKwCGKwCJQAAgD8&udm=26&lns_mode=un&vsdim=300,300&gsessionid=7NHfgxoSCjXc85Yy6kXIzVS84eW0toh8YGCmSrQ8AzQLZjxUIBx3fA&lsessionid=6ccRi0BHVGePLHuQ1RZ5psE8ih_juafvxUa5KSo8u4Xa9a5Y5jnx8g&lns_surface=26&lns_vfs=e&biw=1536&bih=738&hl=en-IR
+Title: Google Advanced Search
 First paragraphs:
 
 ------------------------------------------------------------
@@ -13,21 +45,24 @@ First paragraphs:
 
 ------------------------------------------------------------
 
-URL: https://policies.google.com/privacy?hl=en-IR&fg=1
-Title: Privacy Policy – Privacy & Terms – Google
+URL: https://support.google.com/websearch/?p=ws_results_help&hl=en-IR&fg=1
+Title: Google Search Help
 First paragraphs:
-- When you use our services, you’re trusting us with your information. We understand that this is a big responsibility and we work hard to protect your information and put you in control.
-- This Privacy Policy is meant to help you understand what information we collect, why we collect it and how you can update, manage, export and delete your information.
-- Privacy Check-Up
 
 ------------------------------------------------------------
 
-URL: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fvsrid%3DCLeMheLy_MnCWBACGAEiJDE5ZjIyZmE3LTlkZTctNDkzMi05OThlLWVhMmE1ZDk2MDZhOTiarOLSp76NAw%26vsint%3DCAIqDAoCCAcSAggKGAEgATojChYNAAAAPxUAAAA_HQAAgD8lAACAPzABEJYBGMgBJQAAgD8%26udm%3D26%26lns_mode%3Dun%26source%3Dlns.web.gsbubb%26vsdim%3D150,200%26gsessionid%3DMPoCXnzjGGlkfDN-l5673Ponu4c3KdmDhfKz_dIsqi7DHeYUsDVtTg%26lsessionid%3DNDuW4H08aMFBB8CTVbfX2g2D420T93uuFl0LxVVERk7jfmrzXmGPfw%26lns_surface%3D26%26lns_vfs%3De%26qsubts%3D1748165410950%26biw%3D1536%26bih%3D738%26hl%3Den-IR%26sei%3DI-MyaKXpF5ehi-gPsKfUqAo&ec=GAZAAQ
+URL: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fvsrid%3DCNCXvaOfsprsURACGAEiJDJiNDViMjQxLTI4MTctNGJiOC05NWRiLTE3YzJmY2E4ZGI1Mzj9m7u_yb6NAw%26vsint%3DCAIqDAoCCAcSAggKGAEgATojChYNAAAAPxUAAAA_HQAAgD8lAACAPzABEKwCGKwCJQAAgD8%26udm%3D26%26lns_mode%3Dun%26source%3Dlns.web.gsbubb%26vsdim%3D300,300%26gsessionid%3D7NHfgxoSCjXc85Yy6kXIzVS84eW0toh8YGCmSrQ8AzQLZjxUIBx3fA%26lsessionid%3D6ccRi0BHVGePLHuQ1RZ5psE8ih_juafvxUa5KSo8u4Xa9a5Y5jnx8g%26lns_surface%3D26%26lns_vfs%3De%26qsubts%3D1748174495897%26biw%3D1536%26bih%3D738%26hl%3Den-IR%26sei%3DoQYzaPTuK8mYi-gPj7_vuA4&ec=GAZAAQ
 Title: Sign in - Google Accounts
 First paragraphs:
 - Use your Google Account
 - Forgot email?
 - Not your computer? Use a private browsing window to sign in.Learn more about using Guest mode
+
+------------------------------------------------------------
+
+URL: https://www.google.com/search/about-this-image?img=H4sIAAAAAAAAAFOy57LluDB97-L5m2a9CRRgkmBUUjFKMjFNMjIx1DWyMDTXNUlKstC1NE1J0jU0TzZKS060SEkyNbb4O3v3_pP7epkBCFDTpkEAAAA&sa=X&ved=2ahUKEwiRjte_yb6NAxUR3wIHHVnjI2UQs6gLegQIDRAB
+Title: About this image
+First paragraphs:
 
 ------------------------------------------------------------
 
@@ -37,31 +72,6 @@ First paragraphs:
 - Jump to Content
 - Product support
 - Google Store
-
-------------------------------------------------------------
-
-URL: https://www.google.com/search/about-this-image?img=H4sIAAAAAAAAAFOy57Ll2N7T-ujTn5OHIgSYJBiVVAwt04yM0hLNdS1TUs11TSyNjXQtLS1SdVMTjRJNUyzNDMwSLS1mrXl0afm-XmYAIkNPwUEAAAA&sa=X&ved=2ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQs6gLegQIDRAB
-Error processing: HTTPSConnectionPool(host='www.google.com', port=443): Max retries exceeded with url: /search/about-this-image?img=H4sIAAAAAAAAAFOy57Ll2N7T-ujTn5OHIgSYJBiVVAwt04yM0hLNdS1TUs11TSyNjXQtLS1SdVMTjRJNUyzNDMwSLS1mrXl0afm-XmYAIkNPwUEAAAA&sa=X&ved=2ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQs6gLegQIDRAB (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('_ssl.c:975: The handshake operation timed out')))
-
-------------------------------------------------------------
-
-URL: https://www.google.com/webhp?hl=en&ictx=0&sa=X&ved=0ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQpYkNCAo
-Error processing: HTTPSConnectionPool(host='www.google.com', port=443): Max retries exceeded with url: /webhp?hl=en&ictx=0&sa=X&ved=0ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQpYkNCAo (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('_ssl.c:975: The handshake operation timed out')))
-
-------------------------------------------------------------
-
-URL: https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQPAgI
-Error processing: HTTPSConnectionPool(host='www.google.com', port=443): Max retries exceeded with url: /webhp?hl=en&sa=X&ved=0ahUKEwiy1__Sp76NAxXZ9AIHHTJqDwQQPAgI (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:992)')))
-
-------------------------------------------------------------
-
-URL: https://support.google.com/websearch/answer/181196?hl=en-IR
-Error processing: HTTPSConnectionPool(host='support.google.com', port=443): Max retries exceeded with url: /websearch/answer/181196?hl=en-IR (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:992)')))
-
-------------------------------------------------------------
-
-URL: https://www.google.com/advanced_search?vsrid=CLeMheLy_MnCWBACGAEiJDE5ZjIyZmE3LTlkZTctNDkzMi05OThlLWVhMmE1ZDk2MDZhOTiarOLSp76NAw&vsint=CAIqDAoCCAcSAggKGAEgATojChYNAAAAPxUAAAA_HQAAgD8lAACAPzABEJYBGMgBJQAAgD8&udm=26&lns_mode=un&vsdim=150,200&gsessionid=MPoCXnzjGGlkfDN-l5673Ponu4c3KdmDhfKz_dIsqi7DHeYUsDVtTg&lsessionid=NDuW4H08aMFBB8CTVbfX2g2D420T93uuFl0LxVVERk7jfmrzXmGPfw&lns_surface=26&lns_vfs=e&biw=1536&bih=738&hl=en-IR
-Error processing: HTTPSConnectionPool(host='www.google.com', port=443): Max retries exceeded with url: /advanced_search?vsrid=CLeMheLy_MnCWBACGAEiJDE5ZjIyZmE3LTlkZTctNDkzMi05OThlLWVhMmE1ZDk2MDZhOTiarOLSp76NAw&vsint=CAIqDAoCCAcSAggKGAEgATojChYNAAAAPxUAAAA_HQAAgD8lAACAPzABEJYBGMgBJQAAgD8&udm=26&lns_mode=un&vsdim=150,200&gsessionid=MPoCXnzjGGlkfDN-l5673Ponu4c3KdmDhfKz_dIsqi7DHeYUsDVtTg&lsessionid=NDuW4H08aMFBB8CTVbfX2g2D420T93uuFl0LxVVERk7jfmrzXmGPfw&lns_surface=26&lns_vfs=e&biw=1536&bih=738&hl=en-IR (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:992)')))
 
 ------------------------------------------------------------
 

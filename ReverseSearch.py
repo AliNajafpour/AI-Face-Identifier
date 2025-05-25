@@ -80,7 +80,7 @@ def extract_images(driver, max_images=10):
             break
     links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
     source_urls = {
-        link.get_attribute('href') for link in links if link.get_attribute('href')
+        link.get_attribute('href') for link in links if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
     }
 
     return list(image_urls), list(source_urls)[0:max_images+10]
@@ -246,5 +246,5 @@ def main(image_path):
 
 
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/testnf.jpg'
+image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/test2.jpg'
 main(image_path)
