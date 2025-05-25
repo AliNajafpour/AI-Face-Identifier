@@ -109,7 +109,6 @@ def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
             href = link.get_attribute('href')
             print(href)               
             if 'wikipedia.org' in href:
-                print(href)
                 with open('./results/links.txt', 'a', encoding='utf-8') as f:
                     f.write(href + '\n')
                 return href
