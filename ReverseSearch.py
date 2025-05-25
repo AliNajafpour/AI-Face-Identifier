@@ -87,7 +87,7 @@ def extract_images(driver, max_images=10):
 
     return list(image_urls), list(source_urls)[0 : max_images + 10]
 
-def extract_data_first(driver, class_name='I9S4yc'):
+def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
     try:
         span = driver.find_element(By.CLASS_NAME, class_name)
         text = span.text.strip()
@@ -98,27 +98,30 @@ def extract_data_first(driver, class_name='I9S4yc'):
         driver.get(url)
         time.sleep(3)
 
-        links = driver.find_elements(By.XPATH, '//a[contains(@href, "wikipedia.org")]')
+        links = driver.find_elements(By.CLASS_NAME, 'zReHs')
+
+        # Extract href attributes
+
         count = 0
-        lst = []
 
         for link in links:
             href = link.get_attribute('href')
+            print(href)
             if 'wikipedia.org' in href:
                 print(href)
-                with open('./results/links.txt', 'w', encoding='utf-8') as f:
-                    f.write(href)
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
                 return href
             
             elif 'linkedin.com' in href:
-                with open('./results/links.txt', 'w', encoding='utf-8') as f:
-                    f.write(href)
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
                 return href
 
-            if count < 4:
+            if count < count_limit:
                 count += 1
-                with open('./results/links.txt', 'w', encoding='utf-8') as f:
-                    f.write(href)
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
 
         return True
     except Exception as e:
