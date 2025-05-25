@@ -14,6 +14,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 
 
 def setup_driver():
@@ -80,17 +81,19 @@ def extract_images(driver, max_images=10):
             break
     links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
     source_urls = {
-        link.get_attribute('href') for link in links if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
+        link.get_attribute('href')
+        for link in links
+        if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
     }
 
-    return list(image_urls), list(source_urls)[0:max_images+10]
-
+    return list(image_urls), list(source_urls)[0 : max_images + 10]
 
 def extract_data_first(driver, class_name='I9S4yc'):
+    linkedin = False
     try:
         span = driver.find_element(By.CLASS_NAME, class_name)
         text = span.text.strip()
-        
+
         print(f'the Name is: {text}')
         url = f'https://www.google.com/search?q={text}'
 
@@ -100,12 +103,13 @@ def extract_data_first(driver, class_name='I9S4yc'):
         links = driver.find_elements(By.XPATH, '//a[contains(@href, "wikipedia.org")]')
         for link in links:
             href = link.get_attribute('href')
-            if 'wikipedia.org' in href or 'linkedin.com' in href:
+            if 'wikipedia.org' in href:
                 print(href)
                 return href
-        print("Wikipedia link not found.")
-        return None
-
+            elif 'linkedin.com' in href:
+                linkedin = True
+                return href
+        return True
     except Exception as e:
         print(f"Could not find span with class '{class_name}': {e}")
 
@@ -120,31 +124,82 @@ def wiki_extract(url):
     data = soup.find_all('p')
     for p in data:
         text += p.get_text(strip=True) + ' '
-
     with open('./AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8') as f:
         f.write(text)
-
-    print("Extract Completed")
+    print('Extract Completed')
     return text
 
-def linkedin_extract(url):
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
 
-    title = soup.find('h1').text.strip()
-    text = ''
-    data = soup.find_all('p')
-    for p in data:
-        text += p.get_text(strip=True) + ' '
+def linkedin_extract(driver , url='https://www.linkedin.com/in/williamhgates/'):
+    LINKEDIN_EMAIL = 'arsprogramming123@gmail.com'
+    LINKEDIN_PASSWORD = 'ars13861201'
+    try:
+        driver.get('https://www.linkedin.com/login')
+        time.sleep(2)
+        email_input = driver.find_element(By.ID, 'username')
+        password_input = driver.find_element(By.ID, 'password')
+        email_input.send_keys(LINKEDIN_EMAIL)
+        password_input.send_keys(LINKEDIN_PASSWORD)
+        password_input.send_keys(Keys.RETURN)
+        time.sleep(5)
+        driver.get(url)
+        time.sleep(5)
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        name_tag = soup.select_one('h1.inline.t-24.v-align-middle.break-words')
+        name = name_tag.text.strip() if name_tag else 'Name not found'
+        title_tag = soup.select_one('div.text-body-medium.break-words')
+        title = title_tag.text.strip() if title_tag else 'Title not found'
+        location_tag = soup.select_one('span.text-body-small.inline.t-black--light')
+        location = location_tag.text.strip() if location_tag else 'Location not found'
 
-    with open('./AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8') as f:
-        f.write(text)
+        try:
+            contact_btn = driver.find_element(
+                By.CSS_SELECTOR, 'a[href*="overlay/contact-info"]'
+            )
+            contact_btn.click()
+            time.sleep(3)
 
-    print("Extract Completed")
-    return text
+            contact_soup = BeautifulSoup(driver.page_source, 'html.parser')
+            contact_sections = contact_soup.select(
+                'section.pv-contact-info__contact-type'
+            )
 
-def save_source_urls(source_urls, file_name='./AI-Face-Identifier/results/sourceURLs.txt'):
+            contact_info = {}
+            for section in contact_sections:
+                header = section.find('h3')
+                if not header:
+                    continue
+                label = header.text.strip()
+                link = section.find('a', href=True)
+                description = section.find('span')
+
+                contact_info[label] = {
+                    'url': link['href'].strip() if link else None,
+                    'description': description.text.strip() if description else ''
+                }
+        except Exception as e:
+            contact_info = {'error': f"Failed to extract contact info: {str(e)}"}
+        with open(
+            './AI-Face-Identifier/results/results.txt', 'w', encoding='utf-8'
+        ) as file:
+            file.write(f"Name: {name}\n")
+            file.write(f"Title: {title}\n")
+            file.write(f"Location: {location}\n")
+            file.write("Contact Info:\n")
+            if "error" in contact_info:
+                file.write(f" - Error: {contact_info['error']}\n")
+            else:
+                for k, v in contact_info.items():
+                    file.write(f" - {k}: {v['url'] or 'N/A'} ({v['description']})\n")
+
+    finally:
+        pass
+
+
+
+def save_source_urls(
+    source_urls, file_name='./AI-Face-Identifier/results/sourceURLs.txt'
+):
     with open(file_name, 'w', encoding='utf-8') as file:
         for url in source_urls:
             file.write(f"{url}\n")
@@ -179,7 +234,7 @@ def download_images(download_path, image_urls):
 def urlproccessor(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as f:
         urls = [line.strip() for line in f if line.strip()]
-    with open(output_file, 'a', encoding='utf-8'):
+    with open(output_file, 'w', encoding='utf-8'):
         pass
     with open(output_file, 'a', encoding='utf-8') as f_out:
         for url in urls:
@@ -217,19 +272,19 @@ def main(image_path):
         image_urls, source_urls = extract_images(driver, max_images=10)
 
         try:
-            result = extract_data_first(driver, class_name='I9S4yc')
-            if result is not None:
-                wiki_extract(result)
-                linkedin_extract(result)
+            result  = extract_data_first(driver, class_name='I9S4yc')
+            if result is not None and result ==True:                
+                linkedin_extract(driver ,result)
                 return
             else:
-                print('returned None.')
+                wiki_extract(result)
         except Exception as e:
             print(e)
-
         if image_urls:
             print(f"found {len(image_urls)} images.")
-            download_images('./AI-Face-Identifier/results/downloaded_images', image_urls)
+            download_images(
+                './AI-Face-Identifier/results/downloaded_images', image_urls
+            )
         else:
             print('no images found.')
         if source_urls:
@@ -240,11 +295,10 @@ def main(image_path):
         input_file = './AI-Face-Identifier/results/sourceURLs.txt'
         output_file = './AI-Face-Identifier/results/results.txt'
         urlproccessor(input_file, output_file)
-
     finally:
         driver.quit()
 
 
 # Set your image path here
-image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/test2.jpg'
+image_path = 'D:/ARS/programming/faceidentifier/1/AI-Face-Identifier/test_assets/images/download2.png'
 main(image_path)
