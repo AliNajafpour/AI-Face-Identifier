@@ -135,20 +135,26 @@ def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
 
 
 def wiki_extract(url):
+    pattern = '//[a-z]{2,3}\.'
+    en_url = re.sub(pattern, '//', url)
+    # using the English wikipedia if possible
     headers = {'User-Agent': 'Mozilla/5.0'}
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    response = requests.get(en_url, headers=headers)
+    if str(response.status_code).startswith('2'):
+        soup = BeautifulSoup(response.text, 'html.parser')
+    else:
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, 'html.parser')
 
     title = soup.find('h1').text.strip()
     text = ''
     data = soup.find_all('p')
     count = 0
-
+    # get only the first paragraph
     for p in data:
-        if count == 4:
+        if len(p.get_text()) > 20:
+            text = p.get_text()
             break
-        count += 1
-        text += p.get_text(strip=True) + '\n'
 
     with open('./results/wikiResults.txt', 'w', encoding='utf-8') as f:
         f.write(text)
