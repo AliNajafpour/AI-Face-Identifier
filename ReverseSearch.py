@@ -151,14 +151,15 @@ def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
         print(f"Could not find span with class '{class_name}': {e}")
 
 
-def wiki_extract(url):
+def data_extract(url):
     pattern = '//[a-z]{2,3}\.'
     en_url = re.sub(pattern, '//', url)
-    # using the English wikipedia if possible
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(en_url, headers=headers)
+
     if str(response.status_code).startswith('2'):
         soup = BeautifulSoup(response.text, 'html.parser')
+
     else:
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -166,15 +167,24 @@ def wiki_extract(url):
     title = soup.find('h1').text.strip()
     text = ''
     data = soup.find_all('p')
-    count = 0
-    # get only the first paragraph
     for p in data:
         if len(p.get_text()) > 20:
             text = p.get_text()
             break
 
-    with open('./results/wikiResults.txt', 'w', encoding='utf-8') as f:
+    if text == '':
+        count = 0
+        spans = soup.find_all('span')
+        for span in spans:
+            text += span.get_text() + '\n'
+            count += 1
+            if count == 10:
+                break
+
+    with open('./results/data.txt', 'w', encoding='utf-8') as f:
+        f.write(title + "\n")
         f.write(text)
+
     print('Extract Completed')
     return text
 
@@ -319,7 +329,7 @@ def main(path):
         try:
             result = extract_data_first(driver, class_name='I9S4yc')
             if 'wikipedia.org' in result:
-                wiki_extract(result)
+                data_extract(result)
                 return
             
             elif 'linkedin.com' in result:
@@ -352,5 +362,5 @@ def main(path):
 
 
 # Set your image path here
-image_path = 'test_assets/images/download5.png'
+image_path = 'test_assets/images/download.png'
 main(image_path)
