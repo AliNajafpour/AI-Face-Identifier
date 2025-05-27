@@ -38,12 +38,7 @@ def setup_driver():
 
 def search_google_lens(driver, image_path):
     driver.get('https://lens.google.com/')
-    time.sleep(2)
-    button = driver.find_element(By.XPATH, '//button[@aria-label="Accept all"]')
-    if button:
-        button.click()
     wait = WebDriverWait(driver, 30)
-    
 
     if not os.path.exists(image_path):
         print('Image not found!')
@@ -83,13 +78,35 @@ def extract_images(driver, max_images=10):
                 image_urls.add(src)
         if len(image_urls) >= max_images:
             break
-        source_urls = set()
-        links = driver.find_elements(By.XPATH, '//a[@href]')
-        for link in links:
-            href = link.get_attribute('href')
-            if 'google.com' not in href:
-                source_urls.add(href)
+    links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
 
+    tabs = driver.find_elements(By.CLASS_NAME, 'T3FoJb')
+    exact_results = tabs[3]
+    exact_results_source_urls = None
+    try:
+        exact_results.click()
+        try:
+            exact_results_links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
+
+            exact_results_source_urls = {
+                link.get_attribute('href')
+                for link in exact_results_links
+                if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
+            }
+
+            driver.back()
+        except:
+            print('failed to get the links of the exact mathces')
+    except:
+        print('cant go to the exact matches')
+
+    source_urls = {
+        link.get_attribute('href')
+        for link in links
+        if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
+    }
+    if exact_results_source_urls:
+        source_urls = source_urls.union(exact_results_source_urls)
 
     return list(image_urls), list(source_urls)[0 : max_images + 10]
 
@@ -327,7 +344,7 @@ def main(path):
 
             input_file = './results/sourceURLs.txt'
             output_file = './results/results.txt'
-            urlproccessor(input_file, output_file)
+            # urlproccessor(input_file, output_file)
 
     finally:
         driver.quit()
@@ -335,5 +352,5 @@ def main(path):
 
 
 # Set your image path here
-image_path = 'test_assets/images/testnf2.jpg'
+image_path = 'test_assets/images/download5.png'
 main(image_path)
