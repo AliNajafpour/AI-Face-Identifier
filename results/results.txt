@@ -1,9 +1,30 @@
-URL: https://www.google.de/intl/de/about/products?tab=wh
-Title: Googleâs products and services - About Google
-First paragraphs:
-- Jump to Content
-- Product support
-- Google Store
-
-------------------------------------------------------------
+Name: Name not found
+Title: Title not found
+Location: Location not found
+Contact Info:
+ - Error: Failed to extract contact info: Message: no such element: Unable to locate element: {"method":"css selector","selector":"a[href*="overlay/contact-info"]"}
+  (Session info: chrome=136.0.7103.114); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00C4FC03+61635]
+	GetHandleVerifier [0x00C4FC44+61700]
+	(No symbol) [0x00A705D3]
+	(No symbol) [0x00AB899E]
+	(No symbol) [0x00AB8D3B]
+	(No symbol) [0x00B00E12]
+	(No symbol) [0x00ADD2E4]
+	(No symbol) [0x00AFE61B]
+	(No symbol) [0x00ADD096]
+	(No symbol) [0x00AAC840]
+	(No symbol) [0x00AAD6A4]
+	GetHandleVerifier [0x00ED4523+2701795]
+	GetHandleVerifier [0x00ECFCA6+2683238]
+	GetHandleVerifier [0x00EEA9EE+2793134]
+	GetHandleVerifier [0x00C668C5+155013]
+	GetHandleVerifier [0x00C6CFAD+181357]
+	GetHandleVerifier [0x00C57458+92440]
+	GetHandleVerifier [0x00C57600+92864]
+	GetHandleVerifier [0x00C41FF0+5296]
+	BaseThreadInitThunk [0x768AFCC9+25]
+	RtlGetAppContainerNamedObjectPath [0x77AA80CE+286]
+	RtlGetAppContainerNamedObjectPath [0x77AA809E+238]
 

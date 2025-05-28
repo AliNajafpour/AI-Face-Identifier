@@ -39,9 +39,11 @@ def setup_driver():
 def search_google_lens(driver, image_path):
     driver.get('https://lens.google.com/')
     time.sleep(2)
-    button = driver.find_element(By.XPATH, '//button[@aria-label="Accept all"]')
-    if button:
+    try:
+        button = driver.find_element(By.XPATH, '//button[@aria-label="Accept all"]')
         button.click()
+    except:
+        pass
     wait = WebDriverWait(driver, 30)
     
 
@@ -173,7 +175,7 @@ def linkedin_extract(driver , url):
         email_input.send_keys(LINKEDIN_EMAIL)
         password_input.send_keys(LINKEDIN_PASSWORD)
         password_input.send_keys(Keys.RETURN)
-        time.sleep(5)
+        time.sleep(15)
         driver.get(url)
         time.sleep(5)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -335,5 +337,5 @@ def main(path):
 
 
 # Set your image path here
-image_path = 'test_assets/images/testnf2.jpg'
+image_path = 'test_assets/images/testnf.jpg'
 main(image_path)
