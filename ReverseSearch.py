@@ -45,7 +45,6 @@ def search_google_lens(driver, image_path):
     except:
         pass
     wait = WebDriverWait(driver, 30)
-    
 
     if not os.path.exists(image_path):
         print('Image not found!')
@@ -85,13 +84,35 @@ def extract_images(driver, max_images=10):
                 image_urls.add(src)
         if len(image_urls) >= max_images:
             break
-        source_urls = set()
-        links = driver.find_elements(By.XPATH, '//a[@href]')
-        for link in links:
-            href = link.get_attribute('href')
-            if 'google.com' not in href:
-                source_urls.add(href)
+    links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
 
+    tabs = driver.find_elements(By.CLASS_NAME, 'T3FoJb')
+    exact_results = tabs[3]
+    exact_results_source_urls = None
+    try:
+        exact_results.click()
+        try:
+            exact_results_links = driver.find_elements(By.XPATH, '//a[@href and contains(@href, "http")]')
+
+            exact_results_source_urls = {
+                link.get_attribute('href')
+                for link in exact_results_links
+                if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
+            }
+
+            driver.back()
+        except:
+            print('failed to get the links of the exact mathces')
+    except:
+        print('cant go to the exact matches')
+
+    source_urls = {
+        link.get_attribute('href')
+        for link in links
+        if link.get_attribute('href') and 'google.com' not in link.get_attribute('href')
+    }
+    if exact_results_source_urls:
+        source_urls = source_urls.union(exact_results_source_urls)
 
     return list(image_urls), list(source_urls)[0 : max_images + 10]
 
@@ -136,14 +157,15 @@ def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
         print(f"Could not find span with class '{class_name}': {e}")
 
 
-def wiki_extract(url):
+def data_extract(url):
     pattern = '//[a-z]{2,3}\.'
     en_url = re.sub(pattern, '//', url)
-    # using the English wikipedia if possible
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(en_url, headers=headers)
+
     if str(response.status_code).startswith('2'):
         soup = BeautifulSoup(response.text, 'html.parser')
+
     else:
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -151,15 +173,24 @@ def wiki_extract(url):
     title = soup.find('h1').text.strip()
     text = ''
     data = soup.find_all('p')
-    count = 0
-    # get only the first paragraph
     for p in data:
         if len(p.get_text()) > 20:
             text = p.get_text()
             break
 
-    with open('./results/wikiResults.txt', 'w', encoding='utf-8') as f:
+    if text == '':
+        count = 0
+        spans = soup.find_all('span')
+        for span in spans:
+            text += span.get_text() + '\n'
+            count += 1
+            if count == 10:
+                break
+
+    with open('./results/data.txt', 'w', encoding='utf-8') as f:
+        f.write(title + "\n")
         f.write(text)
+
     print('Extract Completed')
     return text
 
@@ -304,7 +335,7 @@ def main(path):
         try:
             result = extract_data_first(driver, class_name='I9S4yc')
             if 'wikipedia.org' in result:
-                wiki_extract(result)
+                data_extract(result)
                 return
             
             elif 'linkedin.com' in result:
@@ -329,7 +360,7 @@ def main(path):
 
             input_file = './results/sourceURLs.txt'
             output_file = './results/results.txt'
-            urlproccessor(input_file, output_file)
+            # urlproccessor(input_file, output_file)
 
     finally:
         driver.quit()
