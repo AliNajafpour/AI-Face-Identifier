@@ -1,1 +1,75 @@
-XDevelopers
+- سال اول با مشکلاتی همراه بود، اما حالا مسابقه در خانه‌ی تیم دلفین‌های میامی برگزار می‌شود — همان جایی که شش سوپربول برگزار کرده و سال آینده میزبان فوتبال جام جهانی است.فرمولا وان از رشدش در آمریکا خوشنود است. حالا ۵۲ میلیون هوادار در این کشور دارد — نیمی از آن‌ها در پنج سال گذشته جذب شده‌اند. تعداد بینندگان ESPN از ۲۰۱۸ دو برابر شده و در یوتیوب، کاربران آمریکایی بیش از هر کشور دیگری فرمولا وان را دنبال می‌کنند.لاس‌وگاس امسال سومین گرندپری متوالی خود را برگزار می‌کند — این‌بار نه در پارکینگ، که روی خود بلوار اصلی. با این حال، فعلاً برنامه‌ای برای گرندپری چهارم در آمریکا نیست.نیویورک و لندن کنار گذاشته شده‌اند. دومنیکالی فقط گرندپری در منهتن را می‌خواهد — با نمای آسمان‌خراش‌ها در پس‌زمینه؛ اما موانع لجستیکی زیاد است. لس‌آنجلس؟ هرچند جذاب، اما بیش از حد بیدار (وُک) است. با افراط محیط‌زیستی‌اش، برای فرمولا وان دردسر خواهد بود.احتمال بعدی، بانکوک است. کره جنوبی هم زمانی علاقه‌مند بود، اما بی‌ثباتی سیاسی پروژه سئول را متوقف کرد.در آمریکا، گام بعدی فیلمی است با بازی برد پیت با عنوان «فرمولا وان»؛ داستان راننده‌ای بازنشسته، با پیش‌نمایشی که ماه آینده در میدان تایمز نیویورک برگزار خواهد شد.
+
+------------------------------------------------------------
+
+URL: https://woman.rambler.ru/stars/48880497-bred-pitt-rasskazal-kak-zhivet-posle-razvoda-s-andzhelinoy-dzholi/
+Error processing: HTTPSConnectionPool(host='woman.rambler.ru', port=443): Max retries exceeded with url: /stars/48880497-bred-pitt-rasskazal-kak-zhivet-posle-razvoda-s-andzhelinoy-dzholi/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000282D075AA50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.folhape.com.br/cultura/brad-pitt-descarta-aposentadoria-e-prefere-ir-devagar-com-o-cinema/234214/
+Title: Brad Pitt descarta aposentadoria e prefere ir devagar com o cinema - Folha PE
+First paragraphs:
+- Aos 58 anos e dezenas de filmes premiados em sua carreira, o ator americanoBrad Pittdisse ter decidido levar a vida e o cinema devagar, "um filme após o outro", e desmente qualquer pensamento deaposentadoria.
+- A julgar pelas risadas que provoca em uma coletiva de imprensa na França, o método funciona perfeitamente.
+- O diretor de cinema David Leitch e Brad Pitt apresentaram "Trem-bala" nesta segunda-feira (18), em Paris, uma comédia com ar de suspense a bordo de um trem entre Tóquio e Kyoto, em que sete assassinos se cruzam e tentam sair do veículo, dependendo da sorte.
+
+------------------------------------------------------------
+
+URL: https://www.otvfoco.com.br/brad-pitt-escancara-lado-imundo-e-revela-nao-gostar-de-banhos-apenas-odeio/
+Title: Brad Pitt escancara lado imundo e revela não gostar de banhos: "apenas odeio"
+First paragraphs:
+- 03/08/2020 às 12h09
+- Brad Pitt tem hábito anti-higiênico revelado (Foto: Reprodução)
+- Brad Pitté sem dúvidas um dos atores mais cogitados de Hollywood, que sempre é escolhido para está presente em grandes produções, principalmente por ser famoso além da conta. Atualmente com 56 anos de idade, o astro continua sendo o eterno galã das telonas.
+
+------------------------------------------------------------
+
+URL: https://www.etemadonline.com/%D8%A8%D8%AE%D8%B4-%D9%81%D8%B1%D9%87%D9%86%DA%AF-%D9%87%D9%86%D8%B1-16/556425-%D8%A7%D9%BE%D9%84-%D9%81%DB%8C%D9%84%D9%85-%D8%A8%D8%B9%D8%AF%DB%8C-%D8%A8%D8%B1%D8%AF-%D9%BE%DB%8C%D8%AA-%D8%B1%D8%A7-%D8%AE%D8%B1%DB%8C%D8%AF-%D9%85%D8%A7%D8%AC%D8%B1%D8%A7%DB%8C-%DB%8C%DA%A9-%D8%B1%D8%A7%D9%86%D9%86%D8%AF%D9%87-%D8%A8%D8%A7%D8%B2%D9%86%D8%B4%D8%B3%D8%AA%D9%87-%D9%81%D8%B1%D9%85%D9%88%D9%84-%DB%8C%DA%A9
+Title: اپل فیلم بعدی برد پیت را خرید/ ماجرای یک راننده بازنشسته فرمول یک
+First paragraphs:
+- کمپانی اپل با ارایه بالاترین پیشنهاد موفق شد تا فیلم بعدی برد پیت را که وی در آن در نقش یک راننده فرمول یک بازنشسته ظاهر می‌شود، به دست آورد.
+- فیلم بعدی برد پیت که به کارگردانی جوزف کوشینسکی کارگردان «تاپ گان: ماوریک» ساخته می‌شود به اپل رسید.
+- به گزارش مهر به نقل از ورایتی، اپل که از چندی پیش در حال مذاکره بود سرانجام با ارایه بالاترین پیشنهاد این فیلم را خرید. کمپانی‌های بزرگ دیگری چون مترو گلدوین مه‌یر، پارامونت، سونی، یونیورسال، نتفلیکس، آمازون و دیزنی نیز در تلاش بودند تا این پروژه را به دست آورند.
+
+------------------------------------------------------------
+
+URL: https://www.baharnews.ir/sdcjmoexvuqetyz.fsfu.html
+Title: ارسال اين مطلب به دوستان - واکنش برد پیت به کارگردانی دیوید فینچر - بهار نیوز
+First paragraphs:
+- ارسال اين مطلب به دوستان
+- (( واکنش برد پیت به کارگردانی دیوید فینچر ))
+
+------------------------------------------------------------
+
+URL: https://www.instagram.com/p/DGVpFVPIvYA/
+Error processing: HTTPSConnectionPool(host='www.instagram.com', port=443): Max retries exceeded with url: /p/DGVpFVPIvYA/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000282D0C45350>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+
+URL: https://www.beytoote.com/news/cultural-news/newshj893.html
+Title: برد پیت از آنجلینا جولی شکایت کرد
+First paragraphs:
+- به گزارش خبرگزاری خبرآنلاین، اختلاف بر سر فروش یک دارایی مشترک در جنوب فرانسه بار دیگر کار دو ستاره سرشناس هالیوود را به دادگاه کشاند. برد پیت از آنجلینا جولی به دلیل فروش سهمش در ملکی در جنوب فرانسه به دادگاه شکایت برد. او مدعی است که آن‌ها توافق کرده بودند که هیچکدام بدون رضایت دیگری سهمشان را به فروش نگذارند. این زوج سرشناس سابق که تا چندی پیش ماجرای طلاقشان خبر داغ رسانه‌ها بود، این دارایی در جنوب فرانسه را سال ۲۰۰۸ به قیمت ۲۵ میلیون یورو خریدند. بر اساس اسناد موجود در دادگاه برد پیت ۶۰ درصد و آنجلینا جولی ۴۰ درصد از مبلغ خرید آن را پرداخت کرده بودند. برد پیت از آنجلینا جولی شکایت کرد برد پیت و آنجلینا جولی سال ۲۰۱۶ جدا شدند. آن‌ها شش فرزند دارند.
+- به گزارش خبرگزاری خبرآنلاین، اختلاف بر سر فروش یک دارایی مشترک در جنوب فرانسه بار دیگر کار دو ستاره سرشناس هالیوود را به دادگاه کشاند.
+- برد پیت از آنجلینا جولی به دلیل فروش سهمش در ملکی در جنوب فرانسه به دادگاه شکایت برد. او مدعی است که آن‌ها توافق کرده بودند که هیچکدام بدون رضایت دیگری سهمشان را به فروش نگذارند.
+
+------------------------------------------------------------
+
+URL: https://khabarpu.com/b.htm?u=%D9%81%DB%8C%D9%84%D9%85-%D8%AC%D8%AF%DB%8C%D8%AF-%D8%A8%D8%B1%D8%AF-%D9%BE%DB%8C%D8%AA-%D8%A8%D8%A7-%D8%A7%DB%8C%D9%81%D8%A7%DB%8C-%D9%86%D9%82%D8%B4-%D8%AF%D8%B1-%D9%81%D8%B1%D9%85%D9%88%D9%84%D8%A7-%D9%88%D8%A7%D9%86_aXZuYW5ld3MuaXIvJUQ5JTgxJURCJThDJUQ5JTg0JUQ5JTg1LSVEOCVBQyVEOCVBRiVEQiU4QyVEOCVBRi0lRDglQTglRDglQjElRDglQUYtJUQ5JUJFJURCJThDJUQ4JUFBLSVEOCVBOCVEOCVBNy0lRDglQTclREIlOEMlRDklODElRDglQTclREIlOEMtJUQ5JTg2JUQ5JTgyJUQ4JUI0LSVEOCVBRiVEOCVCMS0lRDklODElRDglQjElRDklODUlRDklODglRDklODQlRDglQTctJUQ5JTg4JUQ4JUE3JUQ5JTg2_2KfbjNmI2YbYpw==
+Title: فیلم جدید برد پیت با ایفای نقش در فرمولا وان|ایونا
+First paragraphs:
+
+------------------------------------------------------------
+
+URL: https://www.ghatreh.com/news/nn14020805403636566016/%D9%88%D8%A7%DA%A9%D9%86%D8%B4-%D8%A8%D8%B1%D8%AF-%D9%BE%DB%8C%D8%AA-%DA%A9%D8%A7%D8%B1%DA%AF%D8%B1%D8%AF%D8%A7%D9%86%DB%8C-%D8%AF%DB%8C%D9%88%DB%8C%D8%AF-%D9%81%DB%8C%D9%86%DA%86%D8%B1-%D9%85%D8%B2%D8%AE%D8%B1%D9%81-%D9%88%D9%84%DB%8C-%D8%AA%D9%82%D8%B5%DB%8C%D8%B1-%D9%86%D8%A8%D9%88%D8%AF
+Title: No Title
+First paragraphs:
+
+------------------------------------------------------------
+
+URL: https://www.instagram.com/filmarasidergisi/p/DAMCgQUss_C/
+Error processing: HTTPSConnectionPool(host='www.instagram.com', port=443): Max retries exceeded with url: /filmarasidergisi/p/DAMCgQUss_C/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000282D0E35450>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+------------------------------------------------------------
+

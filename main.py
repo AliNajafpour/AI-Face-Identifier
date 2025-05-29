@@ -20,26 +20,31 @@ from transformers import pipeline
 import sites_data_extractor
 
 model = pipeline("question-answering", model="deepset/roberta-base-squad2", tokenizer="deepset/roberta-base-squad2")
+ner_pipeline = pipeline("ner", model="dslim/bert-base-NER", grouped_entities=True)
 
 def text_analysis(text):
+    entities = ner_pipeline(text)
+    name = None
+    for entity in entities:
+        if entity["entity_group"] == "PER": 
+            name = entity["word"]
+            break
+
     questions = {
-        "name": "What is the name of the person?",
         "occupation": "What is the occupation of the person?",
         "nationality": "What is the nationality of the person?",
     }
 
-    results = {}
+    results = {"name": name}
     for key, question in questions.items():
         answer = model(question=question, context=text)
-        if answer['score'] > 0.2:
-            results[key] = answer['answer']
-        else:
-            results[key] = None
+        results[key] = answer["answer"] if answer["score"] > 0.2 else None
 
     print("Name:", results["name"])
     print("Occupation:", results["occupation"])
     print("Nationality:", results["nationality"])
     return results
+
 
 def setup_driver():
     options = Options()
@@ -139,37 +144,38 @@ def extract_images(driver, max_images=10):
 
 def extract_data_first(driver, class_name='I9S4yc', count_limit=10):
      try:
-         span = driver.find_element(By.CLASS_NAME, class_name)
-         text = span.text.strip()
+        span = driver.find_element(By.CLASS_NAME, class_name)
+        text = span.text.strip()
 
-         print(f'the Name is: {text}')
-         url = f'https://www.google.com/search?q={text}'
+    
+        print(f'the Name is: {text}')
+        url = f'https://www.google.com/search?q={text}'
 
-         driver.get(url)
-         time.sleep(3)
+        driver.get(url)
+        time.sleep(3)
 
-         links = driver.find_elements(By.CLASS_NAME, 'zReHs')
+        links = driver.find_elements(By.CLASS_NAME, 'zReHs')
 
-         count = 0
+        count = 0
 
-         with open('./results/links.txt', 'w', encoding='utf-8') as f:
-             f.write('')
-         for link in links:
-             href = link.get_attribute('href')
-             print(href)
-             if 'wikipedia.org' in href:
-                 with open('./results/links.txt', 'a', encoding='utf-8') as f:
-                     f.write(href + '\n')
-                 return href
-             elif 'linkedin.com' in href:
-                 with open('./results/links.txt', 'a', encoding='utf-8') as f:
-                     f.write(href + '\n')
-                 return href
-             if count < count_limit:
-                 count += 1
-                 with open('./results/links.txt', 'a', encoding='utf-8') as f:
-                     f.write(href + '\n')
-         return True
+        with open('./results/links.txt', 'w', encoding='utf-8') as f:
+            f.write('')
+        for link in links:
+            href = link.get_attribute('href')
+            print(href)
+            if 'wikipedia.org' in href:
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
+                return href
+            elif 'linkedin.com' in href:
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
+                return href
+            if count < count_limit:
+                count += 1
+                with open('./results/links.txt', 'a', encoding='utf-8') as f:
+                    f.write(href + '\n')
+        return True
      except Exception as e:
          print(f"Could not find span with class '{class_name}': {e}")
 
@@ -380,6 +386,6 @@ def main(path):
 
 
 # Set your image path here
-image_path = 'test_assets/images/test2.jpg'
+image_path = 'test_assets/images/download.png'
 main(image_path)
-sites_data_extractor.main('results/sourceURLs.txt', 'results/sites_data.txt')
+# sites_data_extractor.main('results/sourceURLs.txt', 'results/sites_data.txt')
