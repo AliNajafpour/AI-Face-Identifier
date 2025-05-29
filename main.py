@@ -17,6 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from transformers import pipeline
+import sites_data_extractor
 
 model = pipeline("question-answering", model="deepset/roberta-base-squad2", tokenizer="deepset/roberta-base-squad2")
 
@@ -379,5 +380,6 @@ def main(path):
 
 
 # Set your image path here
-image_path = 'test_assets/images/download.png'
+image_path = 'test_assets/images/test2.jpg'
 main(image_path)
+sites_data_extractor.main('results/sourceURLs.txt', 'sites_data.txt')
