@@ -382,4 +382,4 @@ def main(path):
 # Set your image path here
 image_path = 'test_assets/images/test2.jpg'
 main(image_path)
-sites_data_extractor.main('results/sourceURLs.txt', 'sites_data.txt')
+sites_data_extractor.main('results/sourceURLs.txt', 'results/sites_data.txt')
