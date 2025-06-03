@@ -1,6 +1,29 @@
 from urllib.parse import urljoin
 import requests
+from boilerpy3 import extractors
 from bs4 import BeautifulSoup
+
+
+def sites_data_scrap_relevant(urls_file: str, filename) -> str:
+    '''it extract almost all the relevent data from the site and as much
+     as possible wont return irreleant texts only main texts'''
+    with open(urls_file, encoding='utf-8') as f:
+        urls = [line.strip() for line in f if line.strip()]
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write('')
+
+    for url in urls:
+        try:
+            extractor = extractors.CanolaExtractor()
+            doc = extractor.get_doc_from_url(url)
+            page_contents = doc.content
+
+            with open(filename, 'a', encoding='utf-8') as f:
+                f.write(f'{page_contents}\n')
+                print(f'saved text from {url}')
+        except Exception as e:
+            print(f"couldn't access the {url} the error was : {e}")
+
 
 MIN_TEXT_LENGTH = 200
 
@@ -20,7 +43,7 @@ def fetch_html(url: str) -> str:
         return ''
 
 
-def parse_html(html: str, base_url: str) -> dict:
+def parse_html(html: str) -> dict:
     """Extract links, meta, images, and visible text"""
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -59,8 +82,9 @@ def parse_html(html: str, base_url: str) -> dict:
         'text': text
     }
 
-
-def main(urls_file: str, filename):
+def sites_data_scrap_all(urls_file: str, filename):
+    '''This function extract all texts in a site no matter relevent or
+     not to the topic or thay are in important or nat'''
     with open(urls_file, encoding='utf-8') as f:
         urls = [line.strip() for line in f if line.strip()]
     with open(filename, 'w', encoding='utf-8') as f:
@@ -69,7 +93,7 @@ def main(urls_file: str, filename):
         html = fetch_html(url)
         if not html:
             continue
-        data = parse_html(html, url)
+        data = parse_html(html)
         # Alert if low text content
         if len(data['text']) < MIN_TEXT_LENGTH:
             print(f"Warning: Low text content for {url}")
@@ -79,6 +103,3 @@ def main(urls_file: str, filename):
                 if key == 'description' or key == 'title':
                     f.write(f"{val}\n")
             f.write(data['text'])
-
-        print(data)
-
