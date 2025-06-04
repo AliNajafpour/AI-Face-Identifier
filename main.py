@@ -402,7 +402,7 @@ def linkedin_extract(driver, url):
     finally:
         pass
 
-def github_extract(url , result):
+def github_extract(url):
     pattern = '//[a-z]{2,3}\\.'
     en_url = re.sub(pattern, '//', url)
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -421,7 +421,22 @@ def github_extract(url , result):
         if readme_tag:
             readme = readme_tag.text.strip() if name_tag else 'ReadMe not found'
             file.write(f"Read Me:{readme}\n")
-    
+
+def x_extract(url, driver):
+    parts = url.split('/')
+    username = parts[3]
+    options = Options()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
+    url = 'https://x.com/' + username
+    driver.get(url)
+    time.sleep(2)
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    span_tags = soup.select('span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3')
+    name = span_tags[16].get_text()
+    search_name(driver ,name)
+
 def main(path):
     driver = setup_driver()
     try:
