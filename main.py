@@ -422,7 +422,7 @@ def github_extract(url):
             readme = readme_tag.text.strip() if name_tag else 'ReadMe not found'
             file.write(f"Read Me:{readme}\n")
 
-def x_extract(url, driver):
+def x_extract(driver ,url):
     parts = url.split('/')
     username = parts[3]
     options = Options()
@@ -462,10 +462,11 @@ def main(path):
                 elif 'linkedin.com' in result:
                     linkedin_extract(driver, result)
                     return
-                # elif 'x.com' in result:
-                #     pass
-                # elif 'github.com' in result:
-                #     pass
+                elif 'x.com' in result:
+                    x_extract(driver, result)
+                    return
+                elif 'github.com' in result:
+                    github_extract(result)
                 # elif 'instagram.com' in result:
                 #     pass
                 # elif 'facebook.com' in result:
@@ -540,10 +541,11 @@ def main(path):
                         elif 'linkedin.com' in result:
                             linkedin_extract(driver, result)
                             return
-                        # elif 'x.com' in result:
-                        #     pass
-                        # elif 'github.com' in result:
-                        #     pass
+                        elif 'x.com' in result:
+                            x_extract(driver, result)
+                            return
+                        elif 'github.com' in result:
+                            github_extract(result)
                         # elif 'instagram.com' in result:
                         #     pass
                         # elif 'facebook.com' in result:
