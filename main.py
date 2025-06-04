@@ -22,12 +22,26 @@ import sites_data_scrap
 from lingua import Language, LanguageDetectorBuilder
 
 # models
-english_qa = pipeline('question-answering', model='deepset/roberta-base-squad2',
-                      tokenizer='deepset/roberta-base-squad2', model_max_lengh=2000)
-persian_qa = pipeline('question-answering', model='pedramyazdipoor/persian_xlm_roberta_large', model_max_lengh=2000)
+english_qa = pipeline(
+    'question-answering',
+    model='deepset/roberta-base-squad2',
+    tokenizer='deepset/roberta-base-squad2',
+    model_max_lengh=2000
+)
+persian_qa = pipeline(
+    'question-answering',
+    model='pedramyazdipoor/persian_xlm_roberta_large',
+    model_max_lengh=2000
+)
 
-english_ner = pipeline('ner', model='dslim/bert-base-NER', aggregation_strategy='simple')
-persian_ner = pipeline('ner', model='HooshvareLab/bert-base-parsbert-ner-uncased', aggregation_strategy='simple')
+english_ner = pipeline(
+    'ner', model='dslim/bert-base-NER', aggregation_strategy='simple'
+)
+persian_ner = pipeline(
+    'ner',
+    model='HooshvareLab/bert-base-parsbert-ner-uncased',
+    aggregation_strategy='simple'
+)
 
 
 def detect_lang(text):
@@ -49,7 +63,7 @@ def eng_text_analysis(text):
     name = None
     if len(entities) > 0:
         for entity in entities:
-            if entity["entity_group"] == "PER":
+            if entity['entity_group'] == 'PER':
                 names.append(entity['word'])
     else:
         return None
@@ -57,18 +71,17 @@ def eng_text_analysis(text):
 
     # Extract occupation and nationality using QA
     questions = {
-        "occupation": f"What is the occupation of {name}?",
-        "nationality": f"What is the nationality of {name}?",
+        'occupation': f"What is the occupation of {name}?",
+        'nationality': f"What is the nationality of {name}?"
     }
 
-    results = {"name": name}
+    results = {'name': name}
     for key, question in questions.items():
         answer = english_qa(question=question, context=text)
-        results[key] = answer["answer"] if answer["score"] > 0.2 else None
-
-    print("Name:", results["name"])
-    print("Occupation:", results["occupation"])
-    print("Nationality:", results["nationality"])
+        results[key] = answer['answer'] if answer['score'] > 0.2 else None
+    print('Name:', results['name'])
+    print('Occupation:', results['occupation'])
+    print('Nationality:', results['nationality'])
     return results
 
 
@@ -78,26 +91,21 @@ def per_text_analysis(text):
     name = None
     if len(entities) > 0:
         for entity in entities:
-            if entity["entity_group"] == "person":
+            if entity['entity_group'] == 'person':
                 names.append(entity['word'])
     else:
         return None
-
     name = max(set(names), key=names.count)
     # Extract occupation and nationality using QA
-    questions = {
-        "occupation": f"شغل {name} چیست؟",
-        "nationality": f"ملیت {name} چیست؟",
-    }
+    questions = {'occupation': f"شغل {name} چیست؟", 'nationality': f"ملیت {name} چیست؟"}
 
-    results = {"name": name}
+    results = {'name': name}
     for key, question in questions.items():
         answer = persian_qa(question=question, context=text)
-        results[key] = answer["answer"] if answer["score"] > 0.2 else None
-
-    print("Name:", results["name"])
-    print("Occupation:", results["occupation"])
-    print("Nationality:", results["nationality"])
+        results[key] = answer['answer'] if answer['score'] > 0.2 else None
+    print('Name:', results['name'])
+    print('Occupation:', results['occupation'])
+    print('Nationality:', results['nationality'])
     return results
 
 
@@ -179,7 +187,7 @@ def extract_images(driver, max_images=10):
                 link.get_attribute('href')
                 for link in exact_results_links
                 if link.get_attribute('href')
-                   and 'google.com' not in link.get_attribute('href')
+                and 'google.com' not in link.get_attribute('href')
             }
 
             driver.back()
@@ -194,7 +202,7 @@ def extract_images(driver, max_images=10):
     }
     if exact_results_source_urls:
         source_urls = source_urls.union(exact_results_source_urls)
-    return list(image_urls), list(source_urls)[0: max_images + 10]
+    return list(image_urls), list(source_urls)[0 : max_images + 10]
 
 
 def search_name(driver, name=None, class_name='I9S4yc', count_limit=100):
@@ -204,7 +212,6 @@ def search_name(driver, name=None, class_name='I9S4yc', count_limit=100):
             name = span.text.strip()
         except:
             print('element not found!')
-
     print(f'the Name is: {name}')
     url = f'https://www.google.com/search?q={name}'
 
@@ -232,70 +239,6 @@ def search_name(driver, name=None, class_name='I9S4yc', count_limit=100):
             with open('./results/links.txt', 'a', encoding='utf-8') as f:
                 f.write(href + '\n')
     return True
-
-
-
-def linkedin_extract(driver, url):
-    LINKEDIN_EMAIL = 'arsprogramming123@gmail.com'
-    LINKEDIN_PASSWORD = 'ars13861201'
-    try:
-        driver.get('https://www.linkedin.com/login')
-        time.sleep(2)
-        email_input = driver.find_element(By.ID, 'username')
-        password_input = driver.find_element(By.ID, 'password')
-        email_input.send_keys(LINKEDIN_EMAIL)
-        password_input.send_keys(LINKEDIN_PASSWORD)
-        password_input.send_keys(Keys.RETURN)
-        time.sleep(15)
-        driver.get(url)
-        time.sleep(5)
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        name_tag = soup.select_one('h1.inline.t-24.v-align-middle.break-words')
-        name = name_tag.text.strip() if name_tag else 'Name not found'
-        title_tag = soup.select_one('div.text-body-medium.break-words')
-        title = title_tag.text.strip() if title_tag else 'Title not found'
-        location_tag = soup.select_one('span.text-body-small.inline.t-black--light')
-        location = location_tag.text.strip() if location_tag else 'Location not found'
-
-        try:
-            contact_btn = driver.find_element(
-                By.CSS_SELECTOR, 'a[href*="overlay/contact-info"]'
-            )
-            contact_btn.click()
-            time.sleep(3)
-
-            contact_soup = BeautifulSoup(driver.page_source, 'html.parser')
-            contact_sections = contact_soup.select(
-                'section.pv-contact-info__contact-type'
-            )
-
-            contact_info = {}
-            for section in contact_sections:
-                header = section.find('h3')
-                if not header:
-                    continue
-                label = header.text.strip()
-                link = section.find('a', href=True)
-                description = section.find('span')
-
-                contact_info[label] = {
-                    'url': link['href'].strip() if link else None,
-                    'description': description.text.strip() if description else ''
-                }
-        except Exception as e:
-            contact_info = {'error': f"Failed to extract contact info: {str(e)}"}
-        with open('./results/results.txt', 'w', encoding='utf-8') as file:
-            file.write(f"Name: {name}\n")
-            file.write(f"Title: {title}\n")
-            file.write(f"Location: {location}\n")
-            file.write("Contact Info:\n")
-            if 'error' in contact_info:
-                file.write(f" - Error: {contact_info['error']}\n")
-            else:
-                for k, v in contact_info.items():
-                    file.write(f" - {k}: {v['url'] or 'N/A'} ({v['description']})\n")
-    finally:
-        pass
 
 
 def save_urls(source_urls, file_name='urls.txt'):
@@ -361,8 +304,9 @@ def urlproccessor(input_file, output_file):
                 f_out.write('\n' + '-' * 60 + '\n\n')
     print(f'Extraction completed. Results saved in "{output_file}".')
 
+#WEBSITES EXTRACTIONS
 
-def data_extract(url):
+def wikipedia_extract(url):
     pattern = '//[a-z]{2,3}\\.'
     en_url = re.sub(pattern, '//', url)
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -396,6 +340,88 @@ def data_extract(url):
     return text
 
 
+def linkedin_extract(driver, url):
+    LINKEDIN_EMAIL = 'arsprogramming123@gmail.com'
+    LINKEDIN_PASSWORD = 'ars13861201'
+    try:
+        driver.get('https://www.linkedin.com/login')
+        time.sleep(2)
+        email_input = driver.find_element(By.ID, 'username')
+        password_input = driver.find_element(By.ID, 'password')
+        email_input.send_keys(LINKEDIN_EMAIL)
+        password_input.send_keys(LINKEDIN_PASSWORD)
+        password_input.send_keys(Keys.RETURN)
+        time.sleep(15)
+        driver.get(url)
+        time.sleep(5)
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        name_tag = soup.select_one('h1.inline.t-24.v-align-middle.break-words')
+        name = name_tag.text.strip() if name_tag else 'Name not found'
+        title_tag = soup.select_one('div.text-body-medium.break-words')
+        title = title_tag.text.strip() if title_tag else 'Title not found'
+        location_tag = soup.select_one('span.text-body-small.inline.t-black--light')
+        location = location_tag.text.strip() if location_tag else 'Location not found'
+
+        try:
+            contact_btn = driver.find_element(
+                By.CSS_SELECTOR, 'a[href*="overlay/contact-info"]'
+            )
+            contact_btn.click()
+            time.sleep(3)
+
+            contact_soup = BeautifulSoup(driver.page_source, 'html.parser')
+            contact_sections = contact_soup.select(
+                'section.pv-contact-info__contact-type'
+            )
+
+            contact_info = {}
+            for section in contact_sections:
+                header = section.find('h3')
+                if not header:
+                    continue
+                label = header.text.strip()
+                link = section.find('a', href=True)
+                description = section.find('span')
+
+                contact_info[label] = {
+                    'url': link['href'].strip() if link else None,
+                    'description': description.text.strip() if description else ''
+                }
+        except Exception as e:
+            contact_info = {'error': f"Failed to extract contact info: {str(e)}"}
+        with open('./results/results.txt', 'w', encoding='utf-8') as file:
+            file.write(f"Name: {name}\n")
+            file.write(f"Title: {title}\n")
+            file.write(f"Location: {location}\n")
+            file.write("Contact Info:\n")
+            if 'error' in contact_info:
+                file.write(f" - Error: {contact_info['error']}\n")
+            else:
+                for k, v in contact_info.items():
+                    file.write(f" - {k}: {v['url'] or 'N/A'} ({v['description']})\n")
+    finally:
+        pass
+
+def github_extract(url , result):
+    pattern = '//[a-z]{2,3}\\.'
+    en_url = re.sub(pattern, '//', url)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(en_url, headers=headers)
+
+    if str(response.status_code).startswith('2'):
+        soup = BeautifulSoup(response.text, 'html.parser')
+    else:
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, 'html.parser')
+    name_tag = soup.select_one('span.p-name.vcard-fullname')
+    name = name_tag.text.strip() if name_tag else 'Name not found'
+    readme_tag = soup.select_one('article.markdown-body.entry-content')
+    with open('./results/results.txt', 'w', encoding='utf-8') as file:
+        file.write(f"Name: {name}\n")
+        if readme_tag:
+            readme = readme_tag.text.strip() if name_tag else 'ReadMe not found'
+            file.write(f"Read Me:{readme}\n")
+    
 def main(path):
     driver = setup_driver()
     try:
@@ -405,13 +431,12 @@ def main(path):
             save_urls(source_urls, file_name='./results/sourceURLs.txt')
         except:
             print("couldn't save the source links.")
-
         try:
             related_names = driver.find_elements(By.CLASS_NAME, 'I9S4yc')
             if len(related_names) > 0:
                 result = search_name(driver, class_name='I9S4yc')
                 if 'wikipedia.org' in result:
-                    text = data_extract(result)
+                    text = wikipedia_extract(result)
                     lang = detect_lang(text)
                     if lang == 'e':
                         results = eng_text_analysis(text)
@@ -431,10 +456,11 @@ def main(path):
                 # elif 'facebook.com' in result:
                 #     pass
                 else:
-                    sites_data_scrap.sites_data_scrap_relevant('./results/sourceURLs.txt', './results/data.txt')
+                    sites_data_scrap.sites_data_scrap_relevant(
+                        './results/sourceURLs.txt', './results/data.txt'
+                    )
                     with open('./results/data.txt', 'r', encoding='utf-8') as f:
                         text = f.read()
-
                     lang = detect_lang(text)
                     if lang == 'e':
                         results = eng_text_analysis(text)
@@ -442,9 +468,10 @@ def main(path):
                         results = per_text_analysis(text)
                     else:
                         results = None
-
                     if results is None:
-                        sites_data_scrap.sites_data_scrap_all('./results/sourceURLs.txt', './results/data.txt')
+                        sites_data_scrap.sites_data_scrap_all(
+                            './results/sourceURLs.txt', './results/data.txt'
+                        )
                         with open('./results/data.txt', 'r', encoding='utf-8') as f:
                             text = f.read()
                         lang = detect_lang(text)
@@ -456,10 +483,11 @@ def main(path):
                             results = None
                     return results
             else:
-                sites_data_scrap.sites_data_scrap_relevant('./results/sourceURLs.txt', './results/data.txt')
+                sites_data_scrap.sites_data_scrap_relevant(
+                    './results/sourceURLs.txt', './results/data.txt'
+                )
                 with open('./results/data.txt', 'r', encoding='utf-8') as f:
                     text = f.read()
-
                 lang = detect_lang(text)
                 if lang == 'e':
                     results = eng_text_analysis(text)
@@ -467,9 +495,10 @@ def main(path):
                     results = per_text_analysis(text)
                 else:
                     results = None
-
                 if results is None:
-                    sites_data_scrap.sites_data_scrap_all('./results/sourceURLs.txt', './results/data.txt')
+                    sites_data_scrap.sites_data_scrap_all(
+                        './results/sourceURLs.txt', './results/data.txt'
+                    )
                     with open('./results/data.txt', 'r', encoding='utf-8') as f:
                         text = f.read()
                     lang = detect_lang(text)
@@ -479,12 +508,13 @@ def main(path):
                         results = per_text_analysis(text)
                     else:
                         results = None
-
                 if results['name']:
                     if results['occupation'] is None or results['nationality'] is None:
-                        result = search_name(driver, name=results['name'], class_name='')
+                        result = search_name(
+                            driver, name=results['name'], class_name=''
+                        )
                         if 'wikipedia.org' in result:
-                            text = data_extract(result)
+                            text = wikipedia_extract(result)
                             lang = detect_lang(text)
                             if lang == 'e':
                                 results = eng_text_analysis(text)
@@ -504,10 +534,11 @@ def main(path):
                         # elif 'facebook.com' in result:
                         #     pass
                         else:
-                            sites_data_scrap.sites_data_scrap_relevant('./results/sourceURLs.txt', './results/data.txt')
+                            sites_data_scrap.sites_data_scrap_relevant(
+                                './results/sourceURLs.txt', './results/data.txt'
+                            )
                             with open('./results/data.txt', 'r', encoding='utf-8') as f:
                                 text = f.read()
-
                             lang = detect_lang(text)
                             if lang == 'e':
                                 results = eng_text_analysis(text)
@@ -515,10 +546,13 @@ def main(path):
                                 results = per_text_analysis(text)
                             else:
                                 results = None
-
                             if results is None:
-                                sites_data_scrap.sites_data_scrap_all('./results/sourceURLs.txt', './results/data.txt')
-                                with open('./results/data.txt', 'r', encoding='utf-8') as f:
+                                sites_data_scrap.sites_data_scrap_all(
+                                    './results/sourceURLs.txt', './results/data.txt'
+                                )
+                                with open(
+                                    './results/data.txt', 'r', encoding='utf-8'
+                                ) as f:
                                     text = f.read()
                                 lang = detect_lang(text)
                                 if lang == 'e':
@@ -529,7 +563,6 @@ def main(path):
                                     results = None
                             return results
                 return results
-
         except Exception as e:
             print(e)
             if image_urls:
@@ -539,7 +572,6 @@ def main(path):
                 print('no images found.')
             if source_urls:
                 print(f"found {len(source_urls)} source URLs.")
-
             else:
                 print('no source URLs found.')
             input_file = './results/sourceURLs.txt'
