@@ -436,6 +436,26 @@ def x_extract(driver ,url):
     span_tags = soup.select('span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3')
     name = span_tags[16].get_text()
     search_name(driver ,name)
+    
+def quera_extract(url):
+    pattern = '//[a-z]{2,3}\\.'
+    en_url = re.sub(pattern, '//', url)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(en_url, headers=headers)
+
+    if str(response.status_code).startswith('2'):
+        soup = BeautifulSoup(response.text, 'html.parser')
+    else:
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, 'html.parser')
+    name_tag = soup.select_one('h1.chakra-heading')
+    city_tag = soup.select('span')
+    name = name_tag.get_text()
+    city = city_tag[0].get_text()
+    with open('./results/results.txt', 'w', encoding='utf-8') as file:
+        file.write(f"Name: {name}\n")
+        file.write(f"City:{city}\n")
+
 
 def main(path):
     driver = setup_driver()
