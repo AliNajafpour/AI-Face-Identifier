@@ -186,7 +186,7 @@ def data_extract(url):
 
 def linkedin_extract(driver, url):
      LINKEDIN_EMAIL = 'arsprogramming123@gmail.com'
-     LINKEDIN_PASSWORD = 'ars13861201'
+     LINKEDIN_PASSWORD = 'yeah i removed it cause i wanted to login to my linkedin account and i didn’t remember my password so i looked it up here :))))))))'
      try:
          driver.get('https://www.linkedin.com/login')
          time.sleep(2)
